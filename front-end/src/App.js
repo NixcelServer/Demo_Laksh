@@ -13,6 +13,9 @@ function App() {
   return (
     <div className="App">
       {location.pathname === "/adminDashboard" ||
+      location.pathname === "/categories" ||
+      location.pathname === "/UOM" ||
+      location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
       location.pathname === "/addNewProduct" ||
       location.pathname === "/sell" ||
@@ -29,6 +32,9 @@ function App() {
       <AllRoutes />
 
       {location.pathname === "/adminDashboard" ||
+      location.pathname === "/categories" ||
+      location.pathname === "/UOM" ||
+      location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
       location.pathname === "/addNewProduct" ||
       location.pathname === "/admin" ||
