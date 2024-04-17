@@ -7,6 +7,13 @@ import AddProduct from "../pages/Admin/AddProduct";
 
 import AdminsPage from "../pages/Admin/AdminsPage";
 import Dashboard from "../pages/Admin/Dashboard";
+import Categories from "../pages/Admin/Categories";
+
+import UOM from "../pages/Admin/UOM";
+
+
+
+
 
 import AdminNavbar from '../Components/AdminNavbar';
 import AddAdmin from '../pages/Admin/AddAdmin';
@@ -23,6 +30,7 @@ import Sign from "../pages/Sign";
 
 import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
+import Keywords from "../pages/Admin/Keywords";
 
 export default function AllRoutes() {
   return (
@@ -41,15 +49,38 @@ export default function AllRoutes() {
             <>
               <AdminNavbar />
               <Dashboard />
+              {/* <AdminDashboard/> */}
+            </>
+          }
+        />
+       
+        <Route
+          path="/categories"
+          element={
+            <>
+              <AdminNavbar />
+              {/* <Dashboard /> */}
+              <Categories/>
+              {/* <AdminDashboard/> */}
             </>
           }
         />
         <Route
-          path="/addProduct"
+          path="/UOM"
           element={
             <>
               <AdminNavbar />
-              <AddProduct />
+              <UOM />
+              {/* <AdminDashboard/> */}
+            </>
+          }
+        />
+        <Route
+          path="/keywords"
+          element={
+            <>
+              <AdminNavbar />
+              <Keywords />
             </>
           }
         />
