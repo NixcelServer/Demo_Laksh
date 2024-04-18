@@ -65,20 +65,21 @@ const Dashboard = () => {
         />
       </Box>
       {/* <Box 
-      // border={"1px solid red"}  
-      // m="auto"
-      //   mr={"0"}
-      //   mt={{base:"5rem",lg:"0"}}
-      //   w={{ base: "full", md: "70%", lg: "80%" }}
-      //   textAlign={"center"}>
-      //   <Chart
-      //     chartType="PieChart"
-      //     data={data}
-      //     options={options}
-      //     width={"100%"}
-      //     height={"400px"}
+      border={"1px solid red"}  
+      m="auto"
+        mr={"0"}
+        mt={{base:"5rem",lg:"0"}}
+        w={{ base: "full", md: "70%", lg: "80%" }}
+        textAlign={"center"}>
+        <Chart
+          chartType="PieChart"
+          data={data}
+          options={options}
+          width={"100%"}
+          height={"400px"}
         />
       </Box> */}
+      
     </div>
   );
 };

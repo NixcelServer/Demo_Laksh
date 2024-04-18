@@ -8,6 +8,7 @@ import AddProduct from "../pages/Admin/AddProduct";
 import AdminsPage from "../pages/Admin/AdminsPage";
 import Dashboard from "../pages/Admin/Dashboard";
 import Categories from "../pages/Admin/Categories";
+import AssignSubcategory from "../pages/Admin/AssignSubcategory";
 
 import UOM from "../pages/Admin/UOM";
 
@@ -55,13 +56,14 @@ export default function AllRoutes() {
         />
        
         <Route
-          path="/categories"
+          path="/AssignSubcategory"
           element={
             <>
-              <AdminNavbar />
+              {/* <AdminNavbar /> */}
               {/* <Dashboard /> */}
-              <Categories/>
+              {/* <Categories/> */}
               {/* <AdminDashboard/> */}
+              <AssignSubcategory/>
             </>
           }
         />
