@@ -11,10 +11,12 @@ import thunk from "redux-thunk";
 import { reducer as productReducer } from "./Admin/admin.reducer";
 import { bulbReducer } from "./BulbAdmin/bulbadmin.reducer";
 import { machineReducer } from "./MachineAdmin/machineadmin.reducer";
+import { categoryReducer } from "./Admin/Category/category.reducer";
 
 const root_reducer = combineReducers({
 	authReducer,
 	sellReducer,
+  categoryReducer,
   product: productReducer,
   bulb: bulbReducer,
   machine: machineReducer,
