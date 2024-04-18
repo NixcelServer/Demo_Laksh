@@ -27,9 +27,11 @@ export const AdminLog = (payload) => async (dispatch) => {
   try {
       // Call the login API with the provided payload
       const data = await aLoginAPI(payload);
+      console.log(data);
 
       // Dispatch an action indicating successful login
       dispatch({ type: types.ADMIN_LOGIN, payload: data });
+
   } catch (err) {
       // Log any errors that occur during the login process
       console.log(err);

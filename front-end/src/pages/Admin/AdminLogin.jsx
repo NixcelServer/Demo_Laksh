@@ -50,7 +50,7 @@ export default function AdminLogin() {
           duration: 1000,
           isClosable: true,
         })
-        navigate('/admindashboard')
+        navigate('/adminDashboard')
       }
   
     },[error,isLogin])

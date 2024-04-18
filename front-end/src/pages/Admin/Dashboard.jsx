@@ -45,16 +45,16 @@ const Dashboard = () => {
   return (
     <div>
       <Box
-        m="auto"
-        mt="-2rem"
-        mr={"0"}
-        position={{base:'relative', md :"sticky", lg:'sticky'}}
-        top={{base:"5rem",md:"0rem",lg:"0rem"}}
-        zIndex={"13"}
-        // border={"1px solid red"}
-        w={{ base: "full", md: "70%", lg: "80%" }}
-        textAlign={"center"}
-        backgroundColor="gray.100"
+        // m="auto"
+        // mt="-2rem"
+        // mr={"0"}
+        // position={{base:'relative', md :"sticky", lg:'sticky'}}
+        // top={{base:"5rem",md:"0rem",lg:"0rem"}}
+        // zIndex={"13"}
+        // // border={"1px solid red"}
+        // w={{ base: "full", md: "70%", lg: "80%" }}
+        // textAlign={"center"}
+        // backgroundColor="gray.100"
       >
         <StatsMainDashboard
           totalPly={totalPly}
@@ -64,21 +64,21 @@ const Dashboard = () => {
           machines ={machins}
         />
       </Box>
-      <Box 
+      {/* <Box 
       // border={"1px solid red"}  
-      m="auto"
-        mr={"0"}
-        mt={{base:"5rem",lg:"0"}}
-        w={{ base: "full", md: "70%", lg: "80%" }}
-        textAlign={"center"}>
-        <Chart
-          chartType="PieChart"
-          data={data}
-          options={options}
-          width={"100%"}
-          height={"400px"}
+      // m="auto"
+      //   mr={"0"}
+      //   mt={{base:"5rem",lg:"0"}}
+      //   w={{ base: "full", md: "70%", lg: "80%" }}
+      //   textAlign={"center"}>
+      //   <Chart
+      //     chartType="PieChart"
+      //     data={data}
+      //     options={options}
+      //     width={"100%"}
+      //     height={"400px"}
         />
-      </Box>
+      </Box> */}
     </div>
   );
 };
