@@ -34,11 +34,19 @@ const Categories = () => {
   }, []);
 
   const handleSaveChanges = async () => {
+    const userString = sessionStorage.getItem('user');
+    // Parse the user object from the string format stored in sessionStorage
+    const user = JSON.parse(userString);
+
+    // Retrieve the encUserId from the user object
+    const encUserId = user.encUserId;
+    console.log(encUserId);
     
     const payload ={
-      categoryName,   
+      categoryName,encUserId   
     }
     console.log(payload);
+    
     try {
       
       debugger;
