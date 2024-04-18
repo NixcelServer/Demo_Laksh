@@ -92,9 +92,9 @@ export default function Navbar() {
 
           <HStack  alignItems={'center'} display={flag?{ base: 'none', md: 'flex' }:"flex"}    >
             <Box>
-                <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  />
+                {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
             </Box>
-                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} >MartMate</Heading>
+                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} onClick={()=>{navigate('/')}}>B2B Portal</Heading>
            
           </HStack>
           {
@@ -121,10 +121,8 @@ export default function Navbar() {
                             </Button>
                         </InputGroup>
                         </Box>
-
                     </Flex>
-          }
-         
+          }        
           <Flex alignItems={'center'}>
           <HStack
               as={'nav'}

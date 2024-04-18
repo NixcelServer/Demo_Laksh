@@ -1,5 +1,5 @@
 
-
+import './Categories.css';
 
 
 const Categories = () => {
@@ -35,37 +35,42 @@ const Categories = () => {
                   </button>
                 </div>
                 <div class='table-responsive'>
-                  <table class='table table-striped table-bordered zero-configuration'>
-                    <thead>
-                      <tr>
-                        <th>Sr no.</th>
-                        <th>-</th>
-                        <th>-</th>
-                        <th>-</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>00</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>00</td>
-                      </tr>
-                    </tbody>
-                    <tfoot></tfoot>
-                  </table>
-                </div>
+  <table class='table table-striped table-bordered zero-configuration'>
+    <thead>
+      <tr>
+        <th>Sr no.</th>
+        
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>-</td>
+        
+        <td id="actionButton">
+          {/* <button type="button" class="btn btn-primary btn-sm">View</button> */}
+          <button type="button" class="btn btn-danger btn-sm">Delete</button>
+          <button type="button" class="btn btn-success btn-sm">Create</button>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>-</td>
+        
+        <td id="actionButton"> 
+          {/* <button type="button" class="btn btn-primary btn-sm" >View</button> */}
+          <button type="button" class="btn btn-danger btn-sm">Delete</button>
+          <button type="button" class="btn btn-success btn-sm">Create</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot></tfoot>
+  </table>
+</div>
+
               </div>
             </div>
           </div>

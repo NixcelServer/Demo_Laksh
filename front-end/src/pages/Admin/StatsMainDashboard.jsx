@@ -49,7 +49,7 @@ import {
     const user = JSON.parse(sessionStorage.getItem('user'))
 
     return (
-      // <Box maxW="5xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
+      <Box maxW="5xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
 <div>
 <div className='content-body'>
           <div className='container-fluid mt-3'>
@@ -211,5 +211,6 @@ import {
         {/* </SimpleGrid> */}
       {/* </Box> */}
       </div>
+      </Box>
     );
   }

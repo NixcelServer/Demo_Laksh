@@ -118,8 +118,8 @@ const UpperBarContent = ({ onClose, ...rest }) => {
               <span className='logo-compact'>
                 <img src='./theme/images/logo-compact.png' alt='' />
               </span>
-              <span className='brand-title'>
-                <img src='images/logo-text.png' alt='' />
+              <span className='brand-title' >
+             Laksh
               </span>
             </a>
           </div>
