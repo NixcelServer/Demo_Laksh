@@ -25,13 +25,13 @@ import { FiUsers } from "react-icons/fi";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, toLink: "/adminDashboard" },
-  { name: "Admin", icon: GrUserAdmin, toLink: "/admin" },
+  // { name: "Admin", icon: GrUserAdmin, toLink: "/admin" },
   { name: "Categories", icon: GrUserAdmin, toLink: "/categories" },
   { name: "Keywords", icon: GrUserAdmin, toLink: "/keywords" },
   { name: "UOM", icon: RiProductHuntLine, toLink: "/UOM" },
-  { name: "Products", icon: RiProductHuntLine, toLink: "/addProduct" },
-  { name: "Users", icon: FiUsers, toLink: "/user" },
-  { name: "Settings", icon: FiSettings, toLink: "/settings" },
+  // { name: "Products", icon: RiProductHuntLine, toLink: "/addProduct" },
+  // { name: "Users", icon: FiUsers, toLink: "/user" },
+  // { name: "Settings", icon: FiSettings, toLink: "/settings" },
 ];
 const user  =JSON.parse(sessionStorage.getItem('user'))
 
@@ -88,12 +88,13 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+      {/* <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-        <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  />
-        </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
+          
+        {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
+        {/* </Text> */}
+        {/* <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      </Flex> */} 
       {LinkItems.map((link) => (
         <RouterLink to={link.toLink}>
           <NavItem key={link.name} icon={link.icon}>
@@ -113,13 +114,15 @@ const UpperBarContent = ({ onClose, ...rest }) => {
           <div className='brand-logo'>
             <a href='index.html'>
               <b className='logo-abbr'>
-                <img src='./theme/images/logo.png' alt='' />{' '}
+                <img src='/images/2.png' alt='' />{' '}
               </b>
               <span className='logo-compact'>
-                <img src='./theme/images/logo-compact.png' alt='' />
+                <img src='/images/logo-compact.png' alt='' />
               </span>
               <span className='brand-title'>
-                <img src='images/logo-text.png' alt='' />
+              <Image src='/images/2.png' w='60px' objectFit={'cover'}></Image>
+              {/* <h4>Laksh</h4> */}
+                {/* <img src='/images/2.png' alt='' /> */}
               </span>
             </a>
           </div>
