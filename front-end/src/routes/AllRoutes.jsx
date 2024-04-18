@@ -54,12 +54,24 @@ export default function AllRoutes() {
             </>
           }
         />
+
+<Route
+          path="/categories"
+          element={
+            <>
+              <AdminNavbar />
+              
+              <Categories/>
+              
+            </>
+          }
+        />
        
         <Route
           path="/AssignSubcategory"
           element={
             <>
-              {/* <AdminNavbar /> */}
+              <AdminNavbar />
               {/* <Dashboard /> */}
               {/* <Categories/> */}
               {/* <AdminDashboard/> */}

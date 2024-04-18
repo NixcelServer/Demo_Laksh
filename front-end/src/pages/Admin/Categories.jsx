@@ -44,6 +44,10 @@ const Categories = () => {
     setCategoryToDelete(category);
     setShowDeleteConfirmation(true);
   };
+  const handleAssign = () => {
+    // Handle the button click event
+    navigate("/AssignSubcategory");
+  };
 
   const handleConfirmDelete = () => {
     const updatedCategories = categories.filter(
@@ -59,7 +63,7 @@ const Categories = () => {
 
   return (
     <div>
-      <div style={{ marginTop: '4rem' }} className="content-body">
+      <div style={{ marginTop: '2rem' }} className="content-body">
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
@@ -99,10 +103,14 @@ const Categories = () => {
                               >
                                 Delete
                               </button>
+                              
                               <button
                                 type="button"
-                                className="btn btn-primary btn-sm"
-                              >
+                                className="btn btn-success btn-sm"
+                                style={{ margintop: "100px"}}
+                                onClick={() => handleAssign(category)}
+                                
+                                >
                                 Assign
                               </button>
                             </td>
