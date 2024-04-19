@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./Categories.css";
 
 const Categories = () => {
+
   const navigate = useNavigate();
   const closeButtonRef = useRef(null);
   const categories = useSelector(state => state.categoryReducer.categories);
@@ -20,21 +21,29 @@ const Categories = () => {
   const [categoryToDelete, setCategoryToDelete] = useState(null);
 
   // Updated mock data with only "Category 1"
-  const mockCategories = [
-    { id: 1, cat_name: "Category 1", add_date: "2024-04-18" }
-  ];
+ 
+  const fetchCategories = async () => {
+   
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/categories");
+      const categories = response.data;
+      dispatch(getCategories(categories));
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      //setError("Failed to fetch keywords. Please try again later.");
+    } finally {
+      //setLoading(false); // Set loading state to false regardless of success or failure
+    }
 
-  const fetchCategories = () => {
-    // Simulate fetching data from API (useEffect used for simulation)
-    dispatch(getCategories(mockCategories));
   };
-
   useEffect(() => {
     fetchCategories();
   }, []);
 
 
   const handleDelete = async (encCatId) => {
+    setCategoryToDelete(encCatId);
+    setShowDeleteConfirmation(true);
     console.log(encCatId);
     try {
       const userString =  sessionStorage.getItem('user');
@@ -93,12 +102,11 @@ const Categories = () => {
     }
   }
 
-
   // const handleDelete = (category) => {
   //   setCategoryToDelete(category);
   //   setShowDeleteConfirmation(true);
   // };
-  const handleAssign = async(category) => {  
+  const handleAssign = () => {  
     // Handle the button click event
     navigate("/AssignSubcategory");
   };
@@ -114,6 +122,7 @@ const Categories = () => {
   const handleCancelDelete = () => {
     setShowDeleteConfirmation(false);
   };
+
 
 
   return (
@@ -298,5 +307,4 @@ const Categories = () => {
     </div>
   );
 };
-
 export default Categories;
