@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect,useRef,useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/Admin/Category/category.action";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +8,11 @@ import { useNavigate } from "react-router-dom";
 import "./Categories.css";
 
 const Categories = () => {
-  const navigate = useNavigate();
-  const categories = useSelector((state) => state.categoryReducer.categories);
+
+  const closeButtonRef = useRef(null);
+  const categories = useSelector(state => state.categoryReducer.categories);
+  console.log(categories);
+
   const dispatch = useDispatch();
 
   const [categoryName, setNewCategoryName] = useState("");
@@ -29,7 +34,32 @@ const Categories = () => {
   }, []);
 
 
-  const handleSaveChanges = async () => {
+  const handleDelete = async (encCatId) => {
+    console.log(encCatId);
+    try {
+      const userString =  sessionStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const encUserId = user.encUserId;
+  
+      // Include both encUserId and encKeywordId in the payload
+      const payload = {
+        encUserId
+      };
+  
+      // Perform delete operation using encKeywordId and encUserId
+      const response = await axios.delete(`http://127.0.0.1:8000/api/categories/${encCatId}`, { data: payload });      
+      //console.log("Keyword deleted successfully:", response.data);
+      
+      // Refetch keywords after deletion
+      fetchCategories();
+    } catch (error) {
+      console.error("Error deleting keyword:", error);
+    }
+  };
+
+  const handleSaveChanges = async (event) => {
+    event.preventDefault();
+
     const userString = sessionStorage.getItem('user');
     // Parse the user object from the string format stored in sessionStorage
     const user = JSON.parse(userString);
@@ -45,11 +75,17 @@ const Categories = () => {
     
     try {
       
-      debugger;
+      console.log("in try block");
+      
       const response = await axios.post("http://127.0.0.1:8000/api/categories", payload);
+      
       console.log("Category added successfully:", response.data);
-      debugger;
-      navigate("/categories");
+
+      fetchCategories();
+      closeButtonRef.current.click();
+     
+      
+      
     } catch (error) {
       console.error("Error adding category:", error);
      // setError(error.message); // Set error state
@@ -109,7 +145,11 @@ const Categories = () => {
                         {categories.map((category, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{category.cat_name}</td>
+
+                            <td>{category.cat_name}</td> {/* Accessing the 'cat_name' property */}
+                            <button onClick={() => handleDelete(category.encCatId)}>Delete</button> {/* Accessing the 'add_date' property */}
+                            {/* Accessing the 'add_time' property */}
+
                             <td>
                               <button
                                 type="button"
@@ -230,9 +270,12 @@ const Categories = () => {
                 </div>
                 <div className="modal-footer">
                   <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-dismiss="modal"
+
+                  ref={closeButtonRef}
+                    type='button'
+                    class='btn btn-secondary'
+                    data-dismiss='modal'
+
                   >
                     Close
                   </button>
