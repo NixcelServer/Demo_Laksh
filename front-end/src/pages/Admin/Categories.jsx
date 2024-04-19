@@ -28,17 +28,33 @@ const Categories = () => {
     fetchCategories();
   }, []);
 
-  const handleSaveChanges = () => {
-    // Simulate adding category (replace with actual API call if needed)
-    const newCategory = {
-      id: categories.length + 1,
-      cat_name: categoryName,
-      add_date: new Date().toISOString().split("T")[0],
-    };
-    dispatch(getCategories([...categories, newCategory]));
-    setNewCategoryName("");
-    navigate("/categories");
-  };
+
+  const handleSaveChanges = async () => {
+    const userString = sessionStorage.getItem('user');
+    // Parse the user object from the string format stored in sessionStorage
+    const user = JSON.parse(userString);
+
+    // Retrieve the encUserId from the user object
+    const encUserId = user.encUserId;
+    console.log(encUserId);
+    
+    const payload ={
+      categoryName,encUserId   
+    }
+    console.log(payload);
+    
+    try {
+      
+      debugger;
+      const response = await axios.post("http://127.0.0.1:8000/api/categories", payload);
+      console.log("Category added successfully:", response.data);
+      debugger;
+      navigate("/categories");
+    } catch (error) {
+      console.error("Error adding category:", error);
+     // setError(error.message); // Set error state
+    }
+
 
   const handleDelete = (category) => {
     setCategoryToDelete(category);

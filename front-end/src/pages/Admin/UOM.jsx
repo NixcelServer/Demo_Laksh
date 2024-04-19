@@ -1,8 +1,66 @@
-
+import { useNavigate } from "react-router-dom";
+import { getUOM } from "../../redux/Admin/UOM/uom.action";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
 const UOM = () => {
+  const navigate = useNavigate;
+  const uoms = useSelector(state => state.uomReducer.uoms);
+  console.log("delete", uoms);
+
+  
+  const dispatch = useDispatch();
+
+  const [uomName, setNewUomName] = useState("");
+
+  const fetchUOM = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/unit-of-measurements");
+      const uom = response.data // Assuming the category data is under the "message" key
+      //console.log("delete", keywords)
+
+      dispatch(getUOM(uom));
+
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      return null; // Return null or handle the error as needed
+    }
+
+  };
+
+  useEffect(() => {
+    fetchUOM();
+  }, []);
+
+  const handleSaveChanges = async () => {
+    const userString = sessionStorage.getItem('user');
+    // Parse the user object from the string format stored in sessionStorage
+    const user = JSON.parse(userString);
+
+    // Retrieve the encUserId from the user object
+    const encUserId = user.encUserId;
+    console.log(encUserId);
+
+    const payload = {
+      uomName, encUserId
+    }
+    console.log(payload);
+    
+
+    try {
+
+      const response = await axios.post("http://127.0.0.1:8000/api/unit-of-measurements", payload);
+      console.log("Keyword added successfully:", response.data);
+      
+      navigate("/UOM");
+    } catch (error) {
+      console.error("Error adding category:", error);
+      // setError(error.message); // Set error state
+    }
+  }
     return (
       <div>
       <div class='content-body'>
@@ -36,33 +94,25 @@ const UOM = () => {
                 </div>
                 <div class='table-responsive'>
                   <table class='table table-striped table-bordered zero-configuration'>
-                    <thead>
-                      <tr>
-                        <th>Sr no.</th>
-                        <th>-</th>
-                        <th>-</th>
-                        <th>-</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>00</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>00</td>
-                      </tr>
-                    </tbody>
+                  <thead>
+                          <tr>
+                            <th>Sr no.</th>
+                            <th>Unit of Measurement</th>
+
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {uoms.map((uom, index) => (
+                            <tr key={index}>
+                              <td>{index + 1}</td>
+                              <td>{uom.unit_name}</td> {/* Displaying the keyword name */}
+                              <td>
+                                <button>Delete</button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
                     <tfoot></tfoot>
                   </table>
                 </div>
@@ -105,6 +155,8 @@ const UOM = () => {
                     className='form-control'
                     id='unitName'
                     placeholder='Enter UOM Name'
+                    value={uomName} // Bind value to state
+                        onChange={(e) => setNewUomName(e.target.value)}
                   />
                 </div>
               </div>
@@ -116,7 +168,7 @@ const UOM = () => {
                 >
                   Close
                 </button>
-                <button type='submit' class='btn btn-primary'>
+                <button type='submit' class='btn btn-primary' onClick={handleSaveChanges}>
                   Save changes
                 </button>
               </div>

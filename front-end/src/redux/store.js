@@ -12,11 +12,15 @@ import { reducer as productReducer } from "./Admin/admin.reducer";
 import { bulbReducer } from "./BulbAdmin/bulbadmin.reducer";
 import { machineReducer } from "./MachineAdmin/machineadmin.reducer";
 import { categoryReducer } from "./Admin/Category/category.reducer";
+import { keywordReducer } from "./Admin/Keywords/keyword.reducer";
+import { uomReducer } from "./Admin/UOM/uom.reducer";
 
 const root_reducer = combineReducers({
 	authReducer,
 	sellReducer,
   categoryReducer,
+  keywordReducer,
+  uomReducer,
   product: productReducer,
   bulb: bulbReducer,
   machine: machineReducer,
