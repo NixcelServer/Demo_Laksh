@@ -90,12 +90,12 @@ class CategoryController extends Controller
                 return response()->json(['error' => "Sub-Category '{$request->subCategoryName}' already exists"], 422);
         }
 
-        $decSubCatId = EncDecHelper::encDecId($request->encCatId,'decrypt');
+        $decCatId = EncDecHelper::encDecId($request->encCatId,'decrypt');
         $subCategory = new SubCategory;
-        $subCategory->tbl_cat_id = $decSubCatId;
+        $subCategory->tbl_cat_id = $decCatId;
         $subCategory->sub_cat_name = $request->subCategoryName;
-        //$subCategory->add_by = $userDetails->tbl_user_id;
-        $subCategory->add_by = '2';
+        
+        $subCategory->add_by = EncDecHelper::encDecId($request->encUserId,'decrypt');
         $subCategory->add_date = Date::now()->toDateString();
         $subCategory->add_time = Date::now()->toTimeString();
         $subCategory->save();
@@ -123,7 +123,7 @@ class CategoryController extends Controller
         }
 
         // Return a JSON response containing the encrypted UOM IDs
-        return response()->json(['message' => $subCats]);
+        return response()->json($subCats);
     }
 
     public function deleteSubCategory(Request $request, $id)
@@ -137,7 +137,7 @@ class CategoryController extends Controller
         //set the flag to delete
         $subCat->flag ='deleted';
         //$subCat->deleted_by = $userDetails('user');
-        $subCat->deleted_by = '1';
+        $subCat->deleted_by = EncDecHelper::encDecId($request->encUserId,'decrypt');
         $subCat->deleted_date = Date::now()->toDateString();
         $subCat->deleted_time = Date::now()->toTimeString();
 
