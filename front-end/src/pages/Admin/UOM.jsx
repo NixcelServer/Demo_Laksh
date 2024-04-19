@@ -3,11 +3,14 @@ import { getUOM } from "../../redux/Admin/UOM/uom.action";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRef } from 'react';
 
 
 
 const UOM = () => {
-  const navigate = useNavigate;
+  const closeButtonRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
   const uoms = useSelector(state => state.uomReducer.uoms);
   console.log("delete", uoms);
 
@@ -35,13 +38,39 @@ const UOM = () => {
     fetchUOM();
   }, []);
 
-  const handleSaveChanges = async () => {
+  const handleDelete = async (encUomId) => {
+    console.log(encUomId);
+    try {
+      const userString =  sessionStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const encUserId = user.encUserId;
+  
+      // Include both encUserId and encKeywordId in the payload
+      const payload = {
+        encUserId
+      };
+  
+      // Perform delete operation using encKeywordId and encUserId
+      const response = await axios.delete(`http://127.0.0.1:8000/api/unit-of-measurements/${encUomId}`, { data: payload });      
+      //console.log("Keyword deleted successfully:", response.data);
+      
+      // Refetch keywords after deletion
+      fetchUOM();
+    } catch (error) {
+      console.error("Error deleting keyword:", error);
+    }
+  };
+
+  const handleSaveChanges = async (event) => {
+    
+    event.preventDefault();
     const userString = sessionStorage.getItem('user');
     // Parse the user object from the string format stored in sessionStorage
     const user = JSON.parse(userString);
 
     // Retrieve the encUserId from the user object
-    const encUserId = user.encUserId;
+   // const encUserId = user.encUserId;
+   const encUserId = 'dDJUd0VsSFlIMmM9';
     console.log(encUserId);
 
     const payload = {
@@ -51,13 +80,21 @@ const UOM = () => {
     
 
     try {
-
+      console.log("in try block");
+      
+      console.log(payload);
+      
       const response = await axios.post("http://127.0.0.1:8000/api/unit-of-measurements", payload);
       console.log("Keyword added successfully:", response.data);
+     fetchUOM();
       
-      navigate("/UOM");
+      closeButtonRef.current.click();
+      
+
+       navigate("/UOM");
+       console.log("navigate");
     } catch (error) {
-      console.error("Error adding category:", error);
+      //console.error("Error adding category:", error);
       // setError(error.message); // Set error state
     }
   }
@@ -88,6 +125,7 @@ const UOM = () => {
                     class='btn btn-primary'
                     data-toggle='modal'
                     data-target='#addUnitModal'
+                    onClick={() => setShowModal(true)}
                   >
                     Add New
                   </button>
@@ -108,7 +146,7 @@ const UOM = () => {
                               <td>{index + 1}</td>
                               <td>{uom.unit_name}</td> {/* Displaying the keyword name */}
                               <td>
-                                <button>Delete</button>
+                              <button onClick={() => handleDelete(uom.encUomId)}>Delete</button>
                               </td>
                             </tr>
                           ))}
@@ -162,6 +200,7 @@ const UOM = () => {
               </div>
               <div class='modal-footer'>
                 <button
+                ref={closeButtonRef}
                   type='button'
                   class='btn btn-secondary'
                   data-dismiss='modal'
