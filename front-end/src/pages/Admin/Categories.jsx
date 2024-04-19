@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./Categories.css";
 
 const Categories = () => {
-
+  const navigate = useNavigate();
   const closeButtonRef = useRef(null);
   const categories = useSelector(state => state.categoryReducer.categories);
   console.log(categories);
@@ -51,6 +51,7 @@ const Categories = () => {
       //console.log("Keyword deleted successfully:", response.data);
       
       // Refetch keywords after deletion
+      
       fetchCategories();
     } catch (error) {
       console.error("Error deleting keyword:", error);
@@ -90,13 +91,14 @@ const Categories = () => {
       console.error("Error adding category:", error);
      // setError(error.message); // Set error state
     }
+  }
 
 
-  const handleDelete = (category) => {
-    setCategoryToDelete(category);
-    setShowDeleteConfirmation(true);
-  };
-  const handleAssign = () => {  
+  // const handleDelete = (category) => {
+  //   setCategoryToDelete(category);
+  //   setShowDeleteConfirmation(true);
+  // };
+  const handleAssign = async(category) => {  
     // Handle the button click event
     navigate("/AssignSubcategory");
   };
@@ -112,6 +114,7 @@ const Categories = () => {
   const handleCancelDelete = () => {
     setShowDeleteConfirmation(false);
   };
+
 
   return (
     <div>
