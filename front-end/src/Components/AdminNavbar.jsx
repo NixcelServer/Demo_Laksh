@@ -115,14 +115,14 @@ const UpperBarContent = ({ onClose, ...rest }) => {
 
   return(
    
-    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, backgroundColor: '#fff' }}>
-    <div className='nav-header'>
+    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,  }}>
+    <div  className='nav-header'>
           <div className='brand-logo'>
             <a href='index.html'style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
               <b style={{ marginTop: "0rem", textAlign: "center"}}className='logo-abbr'>
                 <img src='/images/2.png' style={{ height: '40px', marginRight: '8px' }} alt='' />{' '}
               </b>
-              <span className='logo-compact' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
+              <span className='logo-compact' style={{ fontSize: '1.5rem', fontWeight: 'bold', }}>
                 {/* <img src='/images/logo-compact.png' alt='' /> */}
               </span>
               <span className='brand-title' > </span>

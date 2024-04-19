@@ -44,7 +44,7 @@ const Categories = () => {
     setCategoryToDelete(category);
     setShowDeleteConfirmation(true);
   };
-  const handleAssign = () => {
+  const handleAssign = () => {  
     // Handle the button click event
     navigate("/AssignSubcategory");
   };

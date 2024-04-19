@@ -16,8 +16,8 @@ const FormComponent = () => {
   };
 
   return (
-    <div class="container">
-  <div class="card">
+    <div class="container" >
+  <div class="card" style={{ marginLeft: '154px',background: 'linear-gradient(89.9deg, rgb(208, 246, 255) 0.1%, rgb(255, 237, 237) 47.9%, rgb(255, 255, 231) 100.2%)'}}>
     <div class="card-body">
       <h5 class="card-title">Category Form</h5>
       <form onSubmit={handleSubmit}>
@@ -54,24 +54,22 @@ const FormComponent = () => {
 
 
 
-
+    {/* <div class="container-fluid" style={{ backgroundColor: 'lightblue', justifyContent: 'flex-end' }}></div> */}
     
-    <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Data Table</h4>
+    <div class="container-fluid" style={{backgroundColor: 'lightgray',borderWidth: '-10px', width: '90%', marginLeft: '4px', marginBottom:'4px',paddingRight: '20px'}}>
+                <div class="row" style={{ backgroundColor: 'lighgray' }}>
+                    <div class="col-12" >
+                        <div class="card" style={{ backgroundColor: 'lighgray', margin:'1 auto'}}>
+                            <div class="card-body" >
+                                <h4 class="card-title" >Data Table</h4>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration">
+                                    <table class="table table-striped table-bordered zero-configuration" style={{ width: '80%', margin: '0 auto', paddingRight: '20px' }}>
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>Category</th>
+                                                <th>Subcategory</th>
+                                                <th>Action</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -79,20 +77,16 @@ const FormComponent = () => {
                                             
                                            
                                             <tr>
-                                                <td>Michael Bruce</td>
-                                                <td>Javascript Developer</td>
-                                                <td>Singapore</td>
-                                                <td>29</td>
-                                                <td>2011/06/27</td>
-                                                <td>$183,000</td>
+                                                <td>-</td>
+                                                <td>- </td>
+                                                <td>-</td>
+                                                
                                             </tr>
                                             <tr>
-                                                <td>Donna Snider</td>
-                                                <td>Customer Support</td>
-                                                <td>New York</td>
-                                                <td>27</td>
-                                                <td>2011/01/25</td>
-                                                <td>$112,000</td>
+                                                
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
