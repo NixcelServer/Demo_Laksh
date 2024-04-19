@@ -8,6 +8,8 @@ import { useRef } from 'react';
 
 
 const UOM = () => {
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [uomToDelete, setUomToDelete] = useState(null);
   const closeButtonRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -38,8 +40,34 @@ const UOM = () => {
     fetchUOM();
   }, []);
 
-  const handleDelete = async (encUomId) => {
-    console.log(encUomId);
+  const handleDelete = async (uom) => {
+
+    setUomToDelete(uom);
+    setShowDeleteConfirmation(true);
+    
+    // try {
+    //   const userString =  sessionStorage.getItem('user');
+    //   const user = JSON.parse(userString);
+    //   const encUserId = user.encUserId;
+  
+    //   // Include both encUserId and encKeywordId in the payload
+    //   const payload = {
+    //     encUserId
+    //   };
+  
+    //   // Perform delete operation using encKeywordId and encUserId
+    //   const response = await axios.delete(`http://127.0.0.1:8000/api/unit-of-measurements/${encUomId}`, { data: payload });      
+    //   //console.log("Keyword deleted successfully:", response.data);
+      
+    //   // Refetch keywords after deletion
+    //   fetchUOM();
+    // } catch (error) {
+    //   console.error("Error deleting keyword:", error);
+    // }
+  };
+
+  const handleConfirmDelete = async() => {
+    const uom = uomToDelete;
     try {
       const userString =  sessionStorage.getItem('user');
       const user = JSON.parse(userString);
@@ -51,7 +79,7 @@ const UOM = () => {
       };
   
       // Perform delete operation using encKeywordId and encUserId
-      const response = await axios.delete(`http://127.0.0.1:8000/api/unit-of-measurements/${encUomId}`, { data: payload });      
+      const response = await axios.delete(`http://127.0.0.1:8000/api/unit-of-measurements/${uom.encUomId}`, { data: payload });      
       //console.log("Keyword deleted successfully:", response.data);
       
       // Refetch keywords after deletion
@@ -59,6 +87,13 @@ const UOM = () => {
     } catch (error) {
       console.error("Error deleting keyword:", error);
     }
+    //dispatch(getCategories(updatedCategories));
+    setShowDeleteConfirmation(false);
+    
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
   };
 
   const handleSaveChanges = async (event) => {
@@ -146,8 +181,14 @@ const UOM = () => {
                               <td>{index + 1}</td>
                               <td>{uom.unit_name}</td> {/* Displaying the keyword name */}
                               <td>
-                              <button onClick={() => handleDelete(uom.encUomId)}>Delete</button>
-                              </td>
+                              <button
+                                type="button"
+                                className="btn btn-danger btn-sm"
+                                style={{ marginRight: "8px" }}
+                                onClick={() => handleDelete(uom)}
+                              >
+                                Delete
+                              </button>                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -159,6 +200,55 @@ const UOM = () => {
           </div>
         </div>
       </div>
+
+       {/* Delete confirmation modal */}
+       <div
+          className={`modal fade ${showDeleteConfirmation ? "show" : ""}`}
+          id="deleteConfirmationModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="deleteConfirmationModalLabel"
+          aria-hidden={!showDeleteConfirmation}
+          style={{ display: showDeleteConfirmation ? "block" : "none" }}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="deleteConfirmationModalLabel">
+                  Confirm Deletion
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={handleCancelDelete}
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Are you sure you want to delete{" "}
+                {uomToDelete && uomToDelete.unit_name}?
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCancelDelete}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleConfirmDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* <!-- Add Unit Modal --> */}
       <div
