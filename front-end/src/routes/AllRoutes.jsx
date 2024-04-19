@@ -68,7 +68,7 @@ export default function AllRoutes() {
         />
        
         <Route
-          path="/AssignSubcategory"
+          path="/AssignSubcategory/:encryptedCategoryId"
           element={
             <>
               <AdminNavbar />

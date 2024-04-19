@@ -41,30 +41,10 @@ const Categories = () => {
   }, []);
 
 
-  const handleDelete = async (encCatId) => {
-    setCategoryToDelete(encCatId);
+  const handleDelete = async (category) => {
+    setCategoryToDelete(category);
     setShowDeleteConfirmation(true);
-    console.log(encCatId);
-    try {
-      const userString =  sessionStorage.getItem('user');
-      const user = JSON.parse(userString);
-      const encUserId = user.encUserId;
-  
-      // Include both encUserId and encKeywordId in the payload
-      const payload = {
-        encUserId
-      };
-  
-      // Perform delete operation using encKeywordId and encUserId
-      const response = await axios.delete(`http://127.0.0.1:8000/api/categories/${encCatId}`, { data: payload });      
-      //console.log("Keyword deleted successfully:", response.data);
-      
-      // Refetch keywords after deletion
-      
-      fetchCategories();
-    } catch (error) {
-      console.error("Error deleting keyword:", error);
-    }
+
   };
 
   const handleSaveChanges = async (event) => {
@@ -106,17 +86,38 @@ const Categories = () => {
   //   setCategoryToDelete(category);
   //   setShowDeleteConfirmation(true);
   // };
-  const handleAssign = () => {  
+  const handleAssign = (category) => {  
     // Handle the button click event
-    navigate("/AssignSubcategory");
-  };
+    const encryptedCategoryId = category.encCatId;
+    console.log(encryptedCategoryId);
 
-  const handleConfirmDelete = () => {
-    const updatedCategories = categories.filter(
-      (category) => category.id !== categoryToDelete.id
-    );
-    dispatch(getCategories(updatedCategories));
+    navigate(`/AssignSubcategory/${encryptedCategoryId}`);
+  }
+
+  const handleConfirmDelete = async() => {
+    const category = categoryToDelete;
+    try {
+      const userString =  sessionStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const encUserId = user.encUserId;
+  
+      // Include both encUserId and encKeywordId in the payload
+      const payload = {
+        encUserId
+      };
+  
+      // Perform delete operation using encKeywordId and encUserId
+      const response = await axios.delete(`http://127.0.0.1:8000/api/categories/${category.encCatId}`, { data: payload });      
+      //console.log("Keyword deleted successfully:", response.data);
+      
+      // Refetch keywords after deletion
+      fetchCategories();
+    } catch (error) {
+      console.error("Error deleting keyword:", error);
+    }
+    //dispatch(getCategories(updatedCategories));
     setShowDeleteConfirmation(false);
+    
   };
 
   const handleCancelDelete = () => {
@@ -159,7 +160,7 @@ const Categories = () => {
                             <td>{index + 1}</td>
 
                             <td>{category.cat_name}</td> {/* Accessing the 'cat_name' property */}
-                            <button onClick={() => handleDelete(category.encCatId)}>Delete</button> {/* Accessing the 'add_date' property */}
+                            {/* <button onClick={() => handleDelete(category.encCatId)}>Delete</button> Accessing the 'add_date' property */}
                             {/* Accessing the 'add_time' property */}
 
                             <td>

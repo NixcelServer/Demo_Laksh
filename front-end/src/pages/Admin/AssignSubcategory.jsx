@@ -1,19 +1,136 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FormComponent.css'; // Import CSS file for custom styling
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubCategories } from '../../redux/Admin/Category/category.action';
+import axios from 'axios';
 
 const FormComponent = () => {
-  const [category, setCategory] = useState('');
+
+  const dispatch = useDispatch();
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [subCategoryToDelete, setSubCategoryToDelete] = useState(null);
+  
+  //get the subcategories from the reducer
+  const subCategories = useSelector(state => state.categoryReducer.subCategories);
+
+  console.log("ji",subCategories);
+  
+  const { encryptedCategoryId } = useParams();
+
+  const encCatId = encryptedCategoryId;
+
+  // Retrieve categories from the Redux store
+  const categories = useSelector(state => state.categoryReducer.categories);
+
+  // Find the category with the matching encryptedCategoryId
+  const matchingCategory = categories.find(category => category.encCatId === encCatId);
+
+  // Log the matching category (optional)
+  console.log(matchingCategory);
+
+  const fetchSubCategories = async () => {
+   
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/sub-categories");
+      const subCategories = response.data;
+      dispatch(getSubCategories(subCategories));
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      //setError("Failed to fetch keywords. Please try again later.");
+    } 
+
+  };
+  useEffect(() => {
+    fetchSubCategories();
+  }, []);
+
+  const handleDelete = async (subCategory) => {
+    setSubCategoryToDelete(subCategory);
+    setShowDeleteConfirmation(true);
+   // console.log(encCatId);
+    
+  };
+
+  const handleConfirmDelete = async() => {
+    const subCategory = subCategoryToDelete;
+    try {
+      const userString =  sessionStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const encUserId = user.encUserId;
+  
+      // Include both encUserId and encKeywordId in the payload
+      const payload = {
+        encUserId
+      };
+  
+      // Perform delete operation using encKeywordId and encUserId
+      const response = await axios.delete(`http://127.0.0.1:8000/api/sub-categories/${subCategory.encSubCatId}`, { data: payload });      
+      //console.log("Keyword deleted successfully:", response.data);
+      
+      // Refetch keywords after deletion
+      fetchSubCategories();
+    } catch (error) {
+      console.error("Error deleting keyword:", error);
+    }
+    //dispatch(getCategories(updatedCategories));
+    setShowDeleteConfirmation(false);
+    
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false);
+  };
+ 
   const [subcategory, setSubcategory] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Perform form submission logic here
-    console.log('Category:', category);
+    console.log('Category:', encCatId);
     console.log('Subcategory:', subcategory);
+
+    const userString = sessionStorage.getItem('user');
+    // Parse the user object from the string format stored in sessionStorage
+    const user = JSON.parse(userString);
+
+    // Retrieve the encUserId from the user object
+    const encUserId = user.encUserId;
+    const subCategoryName = subcategory;
+    
+    console.log(encUserId);
+    
+    const payload ={
+      subCategoryName,encUserId,encCatId   
+    }
+    console.log("payload",payload);
+
+    try {
+      
+      console.log("in try block");
+      
+      const response = await axios.post("http://127.0.0.1:8000/api/sub-categories", payload);
+      
+      console.log("Category added successfully:", response.data);
+
+      fetchSubCategories();
+      //closeButtonRef.current.click();
+     
+      
+      
+    } catch (error) {
+      console.error("Error adding category:", error);
+     // setError(error.message); // Set error state
+    }
+
     // Reset form fields
-    setCategory('');
+    
     setSubcategory('');
   };
+
+  const filteredSubCats = subCategories.filter(subCategory => subCategory.encCatId === encCatId);
+
+  console.log("filtered",filteredSubCats);
 
   return (
     <div class="container" >
@@ -28,10 +145,10 @@ const FormComponent = () => {
               type="text"
               class="form-control"
               id="categoryInput"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Enter category name"
-              required
+                value={matchingCategory.cat_name}
+              disabled
+              
+              
             />
           </div>
           
@@ -52,7 +169,54 @@ const FormComponent = () => {
       </form>
     </div>
 
-
+    {/* Delete confirmation modal */}
+    <div
+          className={`modal fade ${showDeleteConfirmation ? "show" : ""}`}
+          id="deleteConfirmationModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="deleteConfirmationModalLabel"
+          aria-hidden={!showDeleteConfirmation}
+          style={{ display: showDeleteConfirmation ? "block" : "none" }}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="deleteConfirmationModalLabel">
+                  Confirm Deletion
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={handleCancelDelete}
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Are you sure you want to delete{" "}
+                {subCategoryToDelete && subCategoryToDelete.sub_cat_name}?
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCancelDelete}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={handleConfirmDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
     {/* <div class="container-fluid" style={{ backgroundColor: 'lightblue', justifyContent: 'flex-end' }}></div> */}
     
@@ -64,31 +228,31 @@ const FormComponent = () => {
                                 <h4 class="card-title" >Data Table</h4>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" style={{ width: '80%', margin: '0 auto', paddingRight: '20px' }}>
-                                        <thead>
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Subcategory</th>
-                                                <th>Action</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                            
-                                           
-                                            <tr>
-                                                <td>-</td>
-                                                <td>- </td>
-                                                <td>-</td>
-                                                
-                                            </tr>
-                                            <tr>
-                                                
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                            </tr>
-                                        </tbody>
+                                    <thead>
+                                      <tr>
+                                        <th>Sr. No</th>
+                                        <th>Subcategory Name</th>
+                                        <th>Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {filteredSubCats.map((subCategory, index) => (
+                                        <tr >
+                                          <td>{index + 1}</td>
+                                          <td>{subCategory.sub_cat_name}</td>
+                                          <td>
+                                          <button
+                                type="button"
+                                className="btn btn-danger btn-sm"
+                                style={{ marginRight: "8px" }}
+                                onClick={() => handleDelete(subCategory)}
+                              >
+                                Delete
+                              </button>
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
                                         <tfoot>
                                             
                                         </tfoot>
