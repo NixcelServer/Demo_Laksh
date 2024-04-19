@@ -83,9 +83,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: "30%", lg: "20%" }}
+      w={{ base: "full", md: "30%", lg: "18.2%" }}
       pos="fixed"
       h="full"
+      marginTop="4rem"
       {...rest}
     >
       {/* <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
@@ -95,6 +96,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         {/* </Text> */}
         {/* <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex> */} 
+      <div style={{ marginTop: '3rem' }}>
       {LinkItems.map((link) => (
         <RouterLink to={link.toLink}>
           <NavItem key={link.name} icon={link.icon}>
@@ -102,6 +104,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
           </NavItem>
         </RouterLink>
       ))}
+
+      </div>
+      
     </Box>
   );
 };
@@ -109,29 +114,31 @@ const SidebarContent = ({ onClose, ...rest }) => {
 const UpperBarContent = ({ onClose, ...rest }) => {
 
   return(
-    <nav>
-    <div className='nav-header'>
+   
+    <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,  }}>
+    <div  className='nav-header'>
           <div className='brand-logo'>
-            <a href='index.html'>
-              <b className='logo-abbr'>
-                <img src='/images/2.png' alt='' />{' '}
+            <a href='index.html'style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <b style={{ marginTop: "0rem", textAlign: "center"}}className='logo-abbr'>
+                <img src='/images/2.png' style={{ height: '40px', marginRight: '8px' }} alt='' />{' '}
               </b>
-              <span className='logo-compact'>
-                <img src='/images/logo-compact.png' alt='' />
+              <span className='logo-compact' style={{ fontSize: '1.5rem', fontWeight: 'bold', }}>
+                {/* <img src='/images/logo-compact.png' alt='' /> */}
               </span>
+              <span className='brand-title' > </span>
+              <h3 style={{ marginLeft: '50px' }}>Laksh</h3>
+
               <span className='brand-title'>
-              <Image src='/images/2.png' w='60px' objectFit={'cover'}></Image>
+              {/* <Image src='/images/2.png' w='60px' objectFit={'cover'}></Image> */}
               {/* <h4>Laksh</h4> */}
                 {/* <img src='/images/2.png' alt='' /> */}
               </span>
             </a>
           </div>
-        </div>
+        </div>  
+
         
-        
-        
-        
-        <div className='header'>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, backgroundColor: '#fff' }}className='header'>
           <div className='header-content clearfix'>
             <div className='nav-control'>
               <div className='hamburger'>
