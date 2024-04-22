@@ -13,6 +13,8 @@ export const loginAPI =async (payload)=>{
 }
 
 export const aLoginAPI =async (payload)=>{
+    // console.log("in admin login");
+    // console.log(payload);
     const res = await axios.post(`http://127.0.0.1:8000/api/login`, payload);
     console.log("Response:", res);
         return res.data

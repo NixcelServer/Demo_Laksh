@@ -104,8 +104,8 @@ const UOM = () => {
     const user = JSON.parse(userString);
 
     // Retrieve the encUserId from the user object
-   // const encUserId = user.encUserId;
-   const encUserId = 'dDJUd0VsSFlIMmM9';
+    const encUserId = user.encUserId;
+   //const encUserId = 'dDJUd0VsSFlIMmM9';
     console.log(encUserId);
 
     const payload = {

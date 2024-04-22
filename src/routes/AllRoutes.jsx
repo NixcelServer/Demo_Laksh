@@ -17,6 +17,8 @@ import UOM from "../pages/Admin/UOM";
 
 
 import AdminNavbar from '../Components/AdminNavbar';
+import SellerLeftMenu from '../pages/Admin/SellerLeftMenu';
+
 import AddAdmin from '../pages/Admin/AddAdmin';
 import AddNewMachines from "../pages/Admin/AddNewMachines";
 import AddNewProduct from '../pages/Admin/AddNewProduct';
@@ -120,13 +122,26 @@ export default function AllRoutes() {
           path="/addNewProduct"
           element={
             <>
-              <AdminNavbar />
+              
               <AddNewProduct />
             </>
           }
         />
 
         <Route />
+
+        <Route
+          path="/SellerLeftMenu"
+          element={
+            <>
+              
+              <SellerLeftMenu />
+            </>
+          }
+        />
+
+        <Route />
+
 
 
        
