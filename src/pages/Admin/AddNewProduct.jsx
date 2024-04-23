@@ -113,14 +113,15 @@ const AddProductPage = () => {
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15)',
           display: 'flex',
           // alignItems: 'center', // Center vertically
-          backgroundColor:'transparent'
+          backgroundColor:'transparent',
+          flexDirection: 'row'
         }}>
- <div style={{ display: 'inline-block', marginLeft: '100px', marginTop:'30px' }}>
+ <div style={{ display: 'inline-block', marginLeft: '100px', marginTop:'50px' }}>
               {photoPreview && (
               <img src={photoPreview} alt="Product Preview" style={{ width: '200px', height: 'auto',paddingleft:'200px' }} />
             )}
           </div>
-          <div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '400px',margintop:'30px' }}>             <h3>Product Details</h3>
+          <div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '100px',margintop:'80px' }}>             <h3>Product Details</h3>
             <p>Product Name: {productDetails.productName || 'Sample Product'}</p>
             <p>Description: {productDetails.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}</p>
             <p>Category: {productDetails.category || 'Laboratory Equipment'}</p>
