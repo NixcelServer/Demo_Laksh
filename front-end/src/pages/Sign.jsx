@@ -28,9 +28,40 @@ export default function Sign() {
   const [mobile, setMobile] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
+  const [emailExists, setEmailExists] = useState(false); // State to track if email exists
+
+  const checkExistingEmail = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/check-existing-email?email=${email}`
+      );
+      setEmailExists(response.data.exists); // Update emailExists state based on API response
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailExists(false); // Reset emailExists state when user changes the email
+    checkExistingEmail(e.target.value); // Check if the entered email exists
+  };
 
   const onsubmit = async () => {
     try {
+      
+    //   const checkEmailResponse = await axios.get(`http://localhost:8000/api/check-existing-email?email=${email}`);
+
+    // if (checkEmailResponse.data.exists) {
+    //   // Display error message if email already exists
+    //   toast({
+    //     title: 'Email already exists',
+    //     status: 'error',
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    //   return; // Exit the function early if email exists
+    // }
       const response = await axios.post('http://localhost:8000/api/register', { // Adjust the endpoint URL accordingly
         u_name,
         email,
@@ -107,7 +138,10 @@ export default function Sign() {
                 </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                <Input type="email" value={email} onChange={onEmailChange} />
+                {emailExists && (
+                  <FormLabel color="red.500">Email already exists</FormLabel>
+                )}
               </FormControl>
               <FormControl id="con_password" isRequired>
                 <FormLabel>Mobile No</FormLabel>
