@@ -48,6 +48,19 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        
+        $validator = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:mst_tbl_users,u_email',
+            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'],
+        ], [
+            'email.unique' => 'This email address is already in use.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ]);
+    
+        if ($validator instanceof Validator && $validator->fails()) {
+            return response()->json(['error' => $validator->errors()], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
        // return response()->json($request);
         $encPass = EncDecHelper::encryptData($request->password);
 
