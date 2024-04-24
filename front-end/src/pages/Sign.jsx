@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Flex,
   Box,
@@ -15,147 +15,168 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { Signin } from '../redux/auth/auth.action';
+import axios from 'axios'; // Import Axios for making HTTP requests
+
 export default function Sign() {
+  //const username = `${firstname} ${lastname}`;
   const [showPassword, setShowPassword] = useState(false);
-  const [firstname,setname] = useState('')
-  const [lastname,setLastname] = useState('')
-  const [email,setEmail] = useState('')
-  const [password,setPass] = useState('')
-  const [mobile,setmob] = useState('')
-  const dispatch = useDispatch()
-  const {error,isSign} = useSelector((store)=>store.authReducer)
+  // const [firstname, setFirstname] = useState('');
+  // const [lastname, setLastname] = useState('');
+  const [u_name, setU_name] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [mobile, setMobile] = useState('');
+  const toast = useToast();
   const navigate = useNavigate();
-  const toast = useToast()
-  // console.log(error,isSign)
-  
-  const onsubmit = ()=>{
-    const payload ={
-      username: {
-        firstname,
-        lastname
-      },
-      email,
-      password,
-      age: 0,
-      mobile,
-      role:"user",
-      address: {
-        city: "",
-        state: "",
-        country: "",
-        pin: 0,
-      },
+  const [emailExists, setEmailExists] = useState(false); // State to track if email exists
+
+  const checkExistingEmail = async (email) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/check-existing-email?email=${email}`
+      );
+      setEmailExists(response.data.exists); // Update emailExists state based on API response
+    } catch (error) {
+      console.error('Error:', error);
     }
+  };
 
-    dispatch(Signin(payload))
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailExists(false); // Reset emailExists state when user changes the email
+    checkExistingEmail(e.target.value); // Check if the entered email exists
+  };
 
-  }
+  const onsubmit = async () => {
+    try {
+      
+    //   const checkEmailResponse = await axios.get(`http://localhost:8000/api/check-existing-email?email=${email}`);
 
-  useEffect(()=>{
-    if(error){
+    // if (checkEmailResponse.data.exists) {
+    //   // Display error message if email already exists
+    //   toast({
+    //     title: 'Email already exists',
+    //     status: 'error',
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    //   return; // Exit the function early if email exists
+    // }
+      const response = await axios.post('http://localhost:8000/api/register', { // Adjust the endpoint URL accordingly
+        u_name,
+        email,
+        password,
+        age: 0,
+        mobile,
+        role: "user",
+        address: {
+          city: "",
+          state: "",
+          country: "",
+          pin: 0,
+        },
+      });
+
+      // Handle success response
+      console.log(response.data);
       toast({
-        title: error,
-        status: 'error',
-        duration: 1000,
-        isClosable: true,
-      })
-    }
-    if(isSign){
-      toast({
-        title: 'Account Created Sucessfully',
+        title: 'Account Created Successfully',
         status: 'success',
-        duration: 1000,
+        duration: 3000,
         isClosable: true,
-      })
-      navigate('/login')
+      });
+      navigate('/'); // Redirect to home page after successful signup
+    } catch (error) {
+      // Handle error
+      console.error('Error:', error.response.data);
+      toast({
+        title: error.response.data.message || 'An error occurred',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
-
-  },[error,isSign])
+  };
 
   return (
     <>
-       <Flex
-      minH={'100vh'}
-      // align={'center'}
-      justify={'center'}
-      backgroundImage="url('https://c4.wallpaperflare.com/wallpaper/311/864/40/minimalism-blue-green-gradient-wallpaper-preview.jpg')"
-      backgroundSize="cover"
-      
+      <Flex
+        minH={'100vh'}
+        justify={'center'}
+        backgroundImage="url('https://c4.wallpaperflare.com/wallpaper/311/864/40/minimalism-blue-green-gradient-wallpaper-preview.jpg')"
+        backgroundSize="cover"
       >
-      <Stack spacing={3} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack align={'center'}>
-          <Heading  pb='10px'  color={'whiteAlpha.800'} fontSize={'4xl'} textAlign={'center'}>
-            Sign up
-          </Heading>
-    
-        </Stack>
-        <Box
-          rounded={'lg'}
-          bg={'whiteAlpha.700'}
-          boxShadow={'lg'}
-          p={8}>
-          <Stack spacing={4}>
-            <HStack>
-              <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>FirstName</FormLabel>
-                  <Input type="text" value={firstname} onChange={(e)=>{setname(e.target.value)}} />
-                </FormControl>
-              </Box>
-              <Box>
-                <FormControl id="lastName" isRequired>
-                  <FormLabel>LastName</FormLabel>
-                  <Input type="text" value={lastname} onChange={(e)=>{setLastname(e.target.value)}} />
-                </FormControl>
-              </Box>
-            </HStack>
-           
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-            </FormControl>
-            <FormControl id="con_password" isRequired>
-              <FormLabel>Mob No </FormLabel>
-              <InputGroup>
-                <Input type={ 'text' } value={mobile}  onChange={(e)=>{setmob(e.target.value)}}/>
-              </InputGroup>
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? 'text' : 'password'} value={password} onChange={(e)=>{setPass(e.target.value)}}/>
-                <InputRightElement h={'full'}>
-                  <Button
-                    variant={'ghost'}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }>
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-
-            <Stack spacing={10} pt={2}>
-              <Button
-                onClick={onsubmit}           
-                loadingText="Submitting"
-                size="lg"
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                  bg: 'blue.500',
-                }}>
-                Sign up
-              </Button>
-            </Stack>
-           
+        <Stack spacing={3} mx={'auto'} maxW={'lg'} py={12} px={6}>
+          <Stack align={'center'}>
+            <Heading pb='10px' color={'whiteAlpha.800'} fontSize={'4xl'} textAlign={'center'}>
+              Sign up
+            </Heading>
           </Stack>
-        </Box>
-      </Stack>
-    </Flex>
+          <Box
+            rounded={'lg'}
+            bg={'whiteAlpha.700'}
+            boxShadow={'lg'}
+            p={8}>
+            <Stack spacing={4}>
+              {/* <HStack>
+                <Box>
+                  <FormControl id="firstName" isRequired>
+                    <FormLabel>First Name</FormLabel>
+                    <Input type="text" value={firstname} onChange={(e) => { setFirstname(e.target.value) }} />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl id="lastName" isRequired>
+                    <FormLabel>Last Name</FormLabel>
+                    <Input type="text" value={lastname} onChange={(e) => { setLastname(e.target.value) }} />
+                  </FormControl>
+                </Box>
+              </HStack> */}
+              <FormControl id="u_name" isRequired>
+                <FormLabel>Name</FormLabel>
+                <Input type="name" value={u_name} onChange={(e) => { setU_name(e.target.value) }}/>
+                </FormControl>
+              <FormControl id="email" isRequired>
+                <FormLabel>Email address</FormLabel>
+                <Input type="email" value={email} onChange={onEmailChange} />
+                {emailExists && (
+                  <FormLabel color="red.500">Email already exists</FormLabel>
+                )}
+              </FormControl>
+              <FormControl id="con_password" isRequired>
+                <FormLabel>Mobile No</FormLabel>
+                <InputGroup>
+                  <Input type={'text'} value={mobile} onChange={(e) => { setMobile(e.target.value) }} />
+                </InputGroup>
+              </FormControl>
+              <FormControl id="password" isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  onClick={onsubmit}
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{ bg: 'blue.500' }}>
+                  Sign up
+                </Button>
+              </Stack>
+            </Stack>
+          </Box>
+        </Stack>
+      </Flex>
     </>
   )
 }

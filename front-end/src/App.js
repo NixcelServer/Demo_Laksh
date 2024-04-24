@@ -3,6 +3,7 @@ import "./App.css";
 
 import Footer from "./Components/home/Footer";
 import Navbar from "./Components/home/Nav";
+import CompanyRegistrationForm from "./Components/company/CompanyRegistrationForm";
 import PlywoodProductPage from "./pages/Products/PlywoodProductPage";
 
 
@@ -18,9 +19,12 @@ function App() {
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
       location.pathname === "/addNewProduct" ||
+
       location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
       location.pathname === "/sell" ||
       location.pathname === "/admin" ? (
+      
+
 
         false
       ) : (
@@ -41,7 +45,10 @@ function App() {
 
       location.pathname === "/addNewProduct" ||
       location.pathname === "/admin" ||
-      location.pathname === "/sell"? (
+      //location.pathname === "/sell" 
+      location.pathname === "/company" ?
+      
+       (
 
         false
       ) : (
