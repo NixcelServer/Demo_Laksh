@@ -19,10 +19,12 @@ function App() {
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
       location.pathname === "/addNewProduct" ||
-      //location.pathname === "/sell" ||
-      location.pathname === "/company" ||
-      location.pathname === "/admin"  ? 
-      (
+
+      location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
+      location.pathname === "/sell" ||
+      location.pathname === "/admin" ? (
+      
+
 
         false
       ) : (
@@ -39,6 +41,8 @@ function App() {
       location.pathname === "/UOM" ||
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
+      location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
+
       location.pathname === "/addNewProduct" ||
       location.pathname === "/admin" ||
       //location.pathname === "/sell" 

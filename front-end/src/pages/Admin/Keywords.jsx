@@ -1,32 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import { getKeywords } from "../../redux/Admin/Keywords/keyword.action";
 import axios from "axios";
-import { useEffect, useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 
 
 
 const Keywords = () => {
+
+  const closeButtonRef = useRef(null);
   const navigate = useNavigate;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const keywords = useSelector(state => state.keywordReducer.keywords);
+  
+
+  
   console.log("delete", keywords);
+
 
   const dispatch = useDispatch();
 
   const [keywordName, setNewKeywordName] = useState("");
 
   const fetchKeywords = async () => {
+
+    setLoading(true); // Set loading state to true
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/keywords");
-      const keywords = response.data // Assuming the category data is under the "message" key
-      //console.log("delete", keywords)
-
+      const keywords = response.data;
       dispatch(getKeywords(keywords));
-
     } catch (error) {
       console.error("Error fetching keywords:", error);
-      return null; // Return null or handle the error as needed
+      setError("Failed to fetch keywords. Please try again later.");
+    } finally {
+      setLoading(false); // Set loading state to false regardless of success or failure
+
     }
 
   };
@@ -35,34 +47,66 @@ const Keywords = () => {
     fetchKeywords();
   }, []);
 
-  const handleSaveChanges = async () => {
-    const userString = sessionStorage.getItem('user');
-    // Parse the user object from the string format stored in sessionStorage
-    const user = JSON.parse(userString);
 
-    // Retrieve the encUserId from the user object
+  const handleDelete = async (encKeywordId) => {
+    try {
+      const userString =  sessionStorage.getItem('user');
+      const user = JSON.parse(userString);
+      const encUserId = user.encUserId;
+  
+      // Include both encUserId and encKeywordId in the payload
+      const payload = {
+        encUserId
+      };
+  
+      // Perform delete operation using encKeywordId and encUserId
+      const response = await axios.delete(`http://127.0.0.1:8000/api/keywords/${encKeywordId}`, { data: payload });      
+      //console.log("Keyword deleted successfully:", response.data);
+      
+      // Refetch keywords after deletion
+      fetchKeywords();
+    } catch (error) {
+      console.error("Error deleting keyword:", error);
+    }
+  };
+
+  const handleSaveChanges = async (event) => {
+    event.preventDefault();
+    const userString = sessionStorage.getItem('user');
+    const user = JSON.parse(userString);
     const encUserId = user.encUserId;
     console.log(encUserId);
 
     const payload = {
       keywordName, encUserId
     }
-    console.log(payload);
-    debugger;
 
+    
     try {
+      let response = await axios.post("http://127.0.0.1:8000/api/keywords", payload);
+    console.warn("Response Status:", response.status); // Log response status
+    console.warn("Response Data:", response.data); // Log response data
+    fetchKeywords();
+    closeButtonRef.current.click();
+    
+    
+  } catch (error) {
+      console.warn(error.response); // Log the response as a warning
+      setError("Failed to add keyword. Please try again later.");
+  } finally {
+      setLoading(false); // Set loading state to false regardless of success or failure
+  }
 
-      const response = await axios.post("http://127.0.0.1:8000/api/keywords", payload);
-      console.log("Keyword added successfully:", response.data);
-      
-      navigate("/keywords");
-    } catch (error) {
-      console.error("Error adding category:", error);
-      // setError(error.message); // Set error state
-    }
   }
     return (
+      
       <div>
+
+        <div>
+      {/* Error message display */}
+      {error && <div className="error-message">{error}</div>}
+
+
         <div class='content-body'>
           <div class='row page-titles mx-0'>
             <div class='col p-md-0'>
@@ -108,7 +152,11 @@ const Keywords = () => {
                               <td>{index + 1}</td>
                               <td>{keyword.keyword_name}</td> {/* Displaying the keyword name */}
                               <td>
+
+                              <button onClick={() => handleDelete(keyword.encKeywordId)}>Delete</button>
+
                                 <button>Delete</button>
+
                               </td>
                             </tr>
                           ))}
@@ -162,6 +210,9 @@ const Keywords = () => {
                   </div>
                   <div class='modal-footer'>
                     <button
+
+                    ref={closeButtonRef}
+
                       type='button'
                       class='btn btn-secondary'
                       data-dismiss='modal'
