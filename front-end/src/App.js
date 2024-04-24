@@ -18,10 +18,11 @@ function App() {
       location.pathname === "/UOM" ||
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
-      location.pathname === "/addNewProduct" ||
+      //location.pathname === "/addNewProduct" ||
       //location.pathname === "/sell" ||
       location.pathname === "/company" ||
-      location.pathname === "/admin"  ? 
+      location.pathname === "/admin" ||
+      location.pathname  ==="/addnewproduct" ? 
       (
 
         false
@@ -39,10 +40,11 @@ function App() {
       location.pathname === "/UOM" ||
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
-      location.pathname === "/addNewProduct" ||
+      //location.pathname === "/addNewProduct" ||
       location.pathname === "/admin" ||
       //location.pathname === "/sell" 
-      location.pathname === "/company" ?
+      location.pathname === "/company" ||
+      location.pathname==="/addnewproduct" ?
       
        (
 

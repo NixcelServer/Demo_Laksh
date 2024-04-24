@@ -72,8 +72,20 @@ export default function CompanyRegistrationForm() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const annualTurnoverOptions = [
+    { label: '0 to 5 lakh', value: '0-5' },
+    { label: '5 lakh to 10 lakh', value: '5-10' },
+    { label: '10 lakh to 15 lakh', value: '10-15' },
+    // Add more options as needed
+  ];
   
-  
+  const numberOfEmployeesOptions = [
+    { label: '0-50', value: '0-50' },
+    { label: '51-100', value: '51-100' },
+    { label: '101-500', value: '101-500' },
+    { label: '501-1000', value: '501-1000' },
+    // Add more options as needed
+  ];
   
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -186,14 +198,26 @@ export default function CompanyRegistrationForm() {
                       <Select type="text" placeholder="Enter annual turnover"
                        name="annualTurnover" // Add name attribute
                        value={formData.annualTurnover} // Bind value to state
-                       onChange={handleChange} />
+                       onChange={handleChange}>
+                        {annualTurnoverOptions.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                       </Select>
                     </FormControl>
                     <FormControl  width="48%">
                       <FormLabel>Number of Employees</FormLabel>
                       <Select type="text" placeholder="Enter number of employees"
                       name="noOfEmps" // Add name attribute
                       value={formData.noOfEmps} // Bind value to state
-                      onChange={handleChange} />
+                      onChange={handleChange}>
+                        {numberOfEmployeesOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Select>
                     </FormControl>
                   </Flex>
                   <Flex justifyContent="space-between" mb={4}>

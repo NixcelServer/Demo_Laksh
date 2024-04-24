@@ -18,7 +18,7 @@ import UOM from "../pages/Admin/UOM";
 import AdminNavbar from '../Components/AdminNavbar';
 import AddAdmin from '../pages/Admin/AddAdmin';
 import AddNewMachines from "../pages/Admin/AddNewMachines";
-import AddNewProduct from '../pages/Admin/AddNewProduct';
+//import AddNewProduct from '../pages/Admin/AddNewProduct';
 
 
 
@@ -34,6 +34,8 @@ import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
 import Keywords from "../pages/Admin/Keywords";
 import MainPage from "../Components/sell/mainPage/MainPage";
+//import AddNewProduct from "../Components/product/addnewproduct"
+import AddNewProduct from "../Components/product/addnewproduct";
 
 export default function AllRoutes() {
   return (
@@ -48,6 +50,10 @@ export default function AllRoutes() {
         <Route path="*" element={<Heading h="55vh">Page not found</Heading>} />
         {/* <Route path="/companyregistrationform" element={<CompanyRegistrationForm />} /> */}
         <Route path="/register" element={<CompanyRegistrationForm />} />
+        <Route path="/addnewproduct" element={<AddNewProduct />} />
+       
+
+        
         
 
         <Route
@@ -119,15 +125,15 @@ export default function AllRoutes() {
             </>
           }
         />
-        <Route
-          path="/addNewProduct"
+        {/* <Route
+          path="/addnewP\product"
           element={
             <>
               <AdminNavbar />
               <AddNewProduct />
             </>
           }
-        />
+        /> */}
 
         <Route />
 

@@ -11,7 +11,8 @@ import {
   Stack,
   Button,
   Heading,
-  useToast
+  useToast,
+  FormErrorMessage
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -25,10 +26,17 @@ export default function Sign() {
   const [u_name, setU_name] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mobile, setMobile] = useState('');
+  const [mobile_number, setMobile] = useState('');
   const toast = useToast();
   const navigate = useNavigate();
   const [emailExists, setEmailExists] = useState(false); // State to track if email exists
+  const [passwordError, setPasswordError] = useState('');
+
+
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
 
   const checkExistingEmail = async (email) => {
     try {
@@ -47,9 +55,21 @@ export default function Sign() {
     checkExistingEmail(e.target.value); // Check if the entered email exists
   };
 
-  const onsubmit = async () => {
+  const onsubmit = async (e) => {
     try {
-      
+      e.preventDefault();
+
+      if (!validatePassword(password)) {
+        setPasswordError('Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character.');
+        toast({
+          title: 'Invalid Password',
+          description: 'Password does not meet the requirements.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
     //   const checkEmailResponse = await axios.get(`http://localhost:8000/api/check-existing-email?email=${email}`);
 
     // if (checkEmailResponse.data.exists) {
@@ -67,7 +87,7 @@ export default function Sign() {
         email,
         password,
         age: 0,
-        mobile,
+        mobile_number,
         role: "user",
         address: {
           city: "",
@@ -134,8 +154,10 @@ export default function Sign() {
               </HStack> */}
               <FormControl id="u_name" isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input type="name" value={u_name} onChange={(e) => { setU_name(e.target.value) }}/>
-                </FormControl>
+                <InputGroup>
+                <Input type={"text"} value={u_name} onChange={(e) => { setU_name(e.target.value) }} />
+                </InputGroup>
+              </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" value={email} onChange={onEmailChange} />
@@ -143,16 +165,20 @@ export default function Sign() {
                   <FormLabel color="red.500">Email already exists</FormLabel>
                 )}
               </FormControl>
-              <FormControl id="con_password" isRequired>
+              <FormControl id="mobile_number" isRequired>
                 <FormLabel>Mobile No</FormLabel>
                 <InputGroup>
-                  <Input type={'text'} value={mobile} onChange={(e) => { setMobile(e.target.value) }} />
+                  <Input
+                    type="text"
+                    value={mobile_number}
+                    onChange={(e) => setMobile(e.target.value)}
+                  />
                 </InputGroup>
               </FormControl>
-              <FormControl id="password" isRequired>
+              <FormControl id="password" isRequired  isInvalid={passwordError}>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                  <Input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => { setPassword(e.target.value);setPasswordError(''); }}  />
                   <InputRightElement h={'full'}>
                     <Button
                       variant={'ghost'}
@@ -161,6 +187,7 @@ export default function Sign() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                {passwordError && <FormErrorMessage>{passwordError}</FormErrorMessage>}
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
