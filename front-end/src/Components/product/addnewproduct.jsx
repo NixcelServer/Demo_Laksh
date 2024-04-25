@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, getSubCategories} from '../../redux/Admin/Category/category.action';
 import { getKeywords } from '../../redux/Admin/Keywords/keyword.action';
 import { getUOM } from '../../redux/Admin/UOM/uom.action';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddProductPage = () => {
@@ -28,7 +29,7 @@ const AddProductPage = () => {
   const dispatch = useDispatch();
   //const [keywords, setKeywords] = useState([]); // State for keywords
  
-  
+  const navigate = useNavigate();
   // Access categories from Redux state
   const categories = useSelector(state => state.categoryReducer.categories);
   console.log("in categoreis",categories);
@@ -130,20 +131,6 @@ const AddProductPage = () => {
   const handleSaveAndContinue = async (e) => {
     e.preventDefault();
 
-
-  //   const encryptedSubCategory = CryptoJS.AES.encrypt(productDetails.subCategory, 'secret_key').toString();
-  //    const encryptedKeywords = CryptoJS.AES.encrypt(productDetails.keywords, 'secret_key').toString();
-  //    const encryptedUOM = CryptoJS.AES.encrypt(productDetails.unitOfMeasurement, 'secret_key').toString();
-
-  //    // Prepare the product details with the encrypted category ID
-  // const productData = {
-  //   ...productDetails,
-  //   //category: encryptedCategoryId,
-  //   subCategory: encryptedSubCategory,
-  //   keywords: encryptedKeywords,
-  //   unitOfMeasurement: encryptedUOM
-  // };
-
     // Logic to save changes and continue
     console.log(productDetails);
     //debugger;
@@ -152,9 +139,8 @@ const AddProductPage = () => {
         'Content-Type': 'multipart/form-data'
       }
       
-    }
-  
-  );
+    });
+    navigate('/');
   }
     
   
@@ -292,21 +278,21 @@ const AddProductPage = () => {
           backgroundColor:'transparent',
           flexDirection: 'row'
         }}>
- <div style={{ display: 'inline-block', marginLeft: '100px', marginTop:'50px' }}>
-              {photoPreview && (
-              <img src={photoPreview} alt="Product Preview" style={{ width: '200px', height: 'auto',paddingleft:'200px' }} />
-            )}
-          </div>
-          <div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '100px',margintop:'80px' }}>             <h3>Product Details</h3>
-            
-          </div>
-        </div>
-        
-        
-        
-      )}
-    </div>
-  );
+          {/* <div style={{ display: 'inline-block', marginLeft: '100px', marginTop:'50px' }}>
+                        {photoPreview && (
+                        <img src={photoPreview} alt="Product Preview" style={{ width: '200px', height: 'auto',paddingleft:'200px' }} />
+                      )}
+                    </div> */}
+                    {/* <div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '100px',margintop:'80px' }}>             <h3>Product Details</h3>
+                      
+                    </div> */}
+                  </div>
+                  
+                  
+                  
+                )}
+              </div>
+            );
 
 }
 export default AddProductPage;
