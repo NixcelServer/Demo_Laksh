@@ -20,13 +20,19 @@ import { footerData } from "../../utils/data";
 
 export function Footeritems({ title, des1, des2, des3 }) {
   return (
-    <VStack alignItems={"flex-start"}>
-      <Heading size="md" textAlign={"left"}>
+    <VStack alignItems={"flex-start"} spacing="1">
+      <Heading size="sm" textAlign={"left"} fontSize="16px">
         {title}
       </Heading>
-      <Text textAlign={"left"}>{des1}</Text>
-      <Text textAlign={"left"}>{des2}</Text>
-      <Text textAlign={"left"}>{des3}</Text>
+      <Text textAlign={"left"} fontSize="14px">
+        {des1}
+      </Text>
+      <Text textAlign={"left"} fontSize="14px">
+        {des2}
+      </Text>
+      <Text textAlign={"left"} fontSize="14px">
+        {des3}
+      </Text>
     </VStack>
   );
 }
@@ -35,35 +41,38 @@ export default function Footer() {
   return (
     <Box
       as="footer"
-      pl="10%"
-      pr="10%"
-      pt="20px"
-      pb="20px"
+      pl="5%"
+      pr="5%"
+      pt="10px"
+      pb="10px"
       bg="gray.200"
-      position="fixed"
+      position="relative"
       bottom="0"
       left="0"
       right="0"
       zIndex="10"
       width="100%"
+      height="100%"
     >
       <Stack
         justifyContent={"space-between"}
-        pb="20px"
+        pb="10px"
         flexDir={{ base: "column", md: "row" }}
       >
-        <Heading size={"md"}>We are here to help you!</Heading>
-        <HStack alignItems={"center"}>
-          <Text>Go Mobile:</Text>
+        <Heading size={"sm"} fontSize="16px">
+          We are here to help you!
+        </Heading>
+        <HStack alignItems={"center"} spacing="3">
+          <Text fontSize="14px">Go Mobile:</Text>
           <Box>
-            <Icon as={AiFillAndroid} boxSize={7} />
-            <Icon as={AiFillApple} boxSize={7} />
+            <Icon as={AiFillAndroid} boxSize={6} />
+            <Icon as={AiFillApple} boxSize={6} />
           </Box>
-          <Text>Follow us on:</Text>
+          <Text fontSize="14px">Follow us on:</Text>
           <Box>
-            <Icon color={"blue"} as={AiFillFacebook} boxSize={7} />
-            <Icon color={"blue.400"} as={AiFillLinkedin} boxSize={7} />
-            <Icon color={"skyblue"} as={AiFillTwitterSquare} boxSize={7} />
+            <Icon color={"blue"} as={AiFillFacebook} boxSize={6} />
+            <Icon color={"blue.400"} as={AiFillLinkedin} boxSize={6} />
+            <Icon color={"skyblue"} as={AiFillTwitterSquare} boxSize={6} />
           </Box>
         </HStack>
       </Stack>
@@ -74,7 +83,7 @@ export default function Footer() {
             sm: "repeat(3, 1fr)",
             md: "repeat(5, 1fr)",
           }}
-          gap={3}
+          gap={2}
         >
           {footerData.map((el, i) => (
             <Footeritems key={i} {...el} />

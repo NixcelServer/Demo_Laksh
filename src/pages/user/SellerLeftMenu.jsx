@@ -2,7 +2,7 @@ import React from 'react';
 
 function SellerLeftMenu() {
   return (
-    <div className="left-menu" style={{ position:'absolute',width: '190px', backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)', margintop:'100px',padding: '20px',height:'127vh',}}>
+    <div className="left-menu" style={{ position:'absolute  ',width: '190px', backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)', margintop:'100px',padding: '20px',height:'100%    ',}}>
       <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
         <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
           <a href="#" style={{ textDecoration: 'none', color: '#fff', display: 'flex', alignItems: 'center' }}>

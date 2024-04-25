@@ -15,8 +15,9 @@ const BuyLeads = (buyLead) => {
     const [showPopup, setShowPopup] = useState(false);
   
     const togglePopup = () => {
-        setShowPopup(!showPopup);
-      };
+      setShowPopup(!showPopup);
+    };
+  
       
     return (
       
@@ -42,20 +43,23 @@ const BuyLeads = (buyLead) => {
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Category: {buyLead.category} Electronics</p>
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Subcategory: {buyLead.subcategory} Accessaries</p>
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Unit of Measurement: {buyLead.unit}--</p>
-        <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Price: {buyLead.price}$68 </p>
+        <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Order Placed: {buyLead.date}24/3/2020 </p>
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Description: {buyLead.description} Boat Rockers 400</p>
       </div>
       <div className="right-side" style={{ flex: 1, textAlign: 'left', height: '300px', width: '515px', marginLeft: '-200px' }}>
         <h5 className="card-title" style={{ color: '#333', fontSize: '24px', marginBottom: '20px', marginTop: '20px' ,fontFamily:'sedan' }}>Buyer Details</h5>
-        <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Products of Interest: {buyLead.productsOfInterest} headphones, mobile, watch, airpods, tabs</p>
-        <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Requirements: {buyLead.requirements}20</p>
-        <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Calls: {buyLead.calls}8</p>
+        
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Member: {buyLead.member ? 'Yes' : 'No'} member since 2 years</p>
         <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Available: {buyLead.available ? 'Yes' : 'No'} Email/Mobile</p>
 
         
         <button className="btn btn-primary" onClick={togglePopup}>View Buyer Details</button>
       
+
+      
+
+
+
 
       </div>
       
@@ -75,16 +79,14 @@ const BuyLeads = (buyLead) => {
   <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Category: {buyLead.category} Electronics</p>
   <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Subcategory: {buyLead.subcategory} Accessaries</p>
   <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Unit of Measurement: {buyLead.unit}--</p>
-  <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Price: {buyLead.price}$68 </p>
+  <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Order Placed: {buyLead.date}24/3/2020 </p>
   <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Description: {buyLead.description} Boat Rockers 400</p>
    
  </div>
   </div>
   <div className="right-side" style={{ flex: 1, textAlign: 'left', height: '300px', width: '515px', marginLeft: '-200px' }}>
     <h5 className="card-title" style={{ color: '#333', fontSize: '24px', marginBottom: '20px', marginTop: '20px',fontFamily:'sedan'  }}>Buyer Details</h5>
-    <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Products of Interest: {buyLead.productsOfInterest} headphones, mobile, watch, airpods, tabs</p>
-    <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Requirements: {buyLead.requirements}20</p>
-    <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Calls: {buyLead.calls}8</p>
+    
     <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Member: {buyLead.member ? 'Yes' : 'No'} member since 2 years</p>
     <p style={{ color: '#666', fontSize: '16px', marginBottom: '10px' }}>Available: {buyLead.available ? 'Yes' : 'No'} Email/Mobile</p>
     <button className="btn btn-primary" onClick={togglePopup}>View Buyer Details</button>
@@ -94,6 +96,34 @@ const BuyLeads = (buyLead) => {
         
         </div>            
         
+
+        {showPopup && (
+  <div className="popup" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="popup-inner" style={{ backgroundColor: 'white', top: 0, left: 20, height: '200px', width: '500px', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
+      <h4 style={{ backgroundColor: '#D1F2EB', textAlign: 'center', color: '#333', marginBottom: '20px' }}>Buyer Details</h4>
+      <p style={{ marginBottom: '10px' }}>Products of Interest: {buyLead.productsOfInterest}</p>
+      <p style={{ marginBottom: '10px' }}>Requirements: {buyLead.requirements}</p>
+      <p style={{ marginBottom: '10px' }}>Calls: {buyLead.calls}</p>
+      <p style={{ marginBottom: '10px' }}>Member: {buyLead.member ? 'Yes' : 'No'} member since 2 years</p>
+      <p style={{ marginBottom: '10px' }}>Available: {buyLead.available ? 'Yes' : 'No'} Email/Mobile</p>
+      <button className="btn btn-secondary" onClick={togglePopup} style={{ marginTop: '20px' }}>Close</button>
+    </div>
+  </div>
+)}
+{showPopup && (
+  <div className="popup" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.3)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="popup-inner" style={{ backgroundColor: 'white', top: 0, left: 20, height: '200px', width: '500px', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
+      <h4 style={{ backgroundColor: '#D1F2EB', textAlign: 'center', color: '#333', marginBottom: '20px',fontFamily:'sedan' }}>Buyer Details</h4>
+      <p style={{textAlign:'left', marginBottom: '10px',fontFamily:'sedan' }}>Name: {buyLead.productsOfInterest}</p>
+      <p style={{textAlign:'left',  marginBottom: '10px' ,fontFamily:'sedan'}}>Email: {buyLead.requirements}</p>
+      <p style={{textAlign:'left',  marginBottom: '10px',fontFamily:'sedan' }}>Conctact: {buyLead.calls}</p>
+   
+      <button className="btn btn-secondary" onClick={togglePopup} style={{ marginBottom:'10px'}}>Close</button>
+    </div>
+  </div>
+)}
+
+
       </div>
      
 

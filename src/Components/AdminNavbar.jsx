@@ -90,10 +90,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: "30%", lg: "18.2%" }}
+      w={{ base: "full", md: "20%", lg: "18.2%" }}
       pos="fixed"
       h="full"
-      marginTop="3rem"
+      marginTop="0rem"
       {...rest}
     >
       {/* <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
@@ -138,11 +138,11 @@ const UpperBarContent = ({ onClose, ...rest }) => {
               <b style={{ marginTop: "0rem", textAlign: "center"}}className='logo-abbr'>
                 <img src='/images/2.png' style={{ height: '40px', marginRight: '8px' }} alt='' />{' '}
               </b>
-              <span className='logo-compact' style={{ fontSize: '1.5rem', fontWeight: 'bold', }}>
+              <span className='logo-compact' style={{ fontSize: '1.6rem', fontWeight: 'bold', }}>
                 {/* <img src='/images/logo-compact.png' alt='' /> */}
               </span>
               <span className='brand-title' > </span>
-              <h3 style={{ marginLeft: '50px', marginTop:'-10px' }}>Laksh</h3>
+              <h3 style={{ marginLeft: '50px',marginBottom:'0px', marginTop:'-10px' }}>Laksh</h3>
 
               <span className='brand-title'>
               {/* <Image src='/images/2.png' w='60px' objectFit={'cover'}></Image> */}

@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 
 const AddProductPage = () => {
+  const [showForm, setShowForm] = useState(false);
   const [photoPreview, setPhotoPreview] = useState(null);
-  const [productDetails, setProductDetails] = useState({
-    productName: '',
-    description: '',
-    category: '',
-    subCategory: '',
-    keywords: '',
-    price: '',
-    quantity: '',
-    unitOfMeasurement: '',
-    photo: null,
-  });
+ const [productDetails, setProductDetails] = useState(false);
+ const [updateMode, setUpdateMode] = useState(false); 
+  
 
   const handleSaveChanges = () => {
     // Logic to save changes
@@ -37,27 +30,66 @@ const AddProductPage = () => {
   const handleSaveAndContinue = () => {
     // Logic to save changes and continue
     console.log('Changes saved and continue to next step!');
+    const formData = new FormData(document.querySelector('form'));
+    const data = Object.fromEntries(formData.entries());
+    setProductDetails(data);
+    setShowForm(false); // Hide the form after saving
   };
 
-  const ButtonToShowAddProductPage = () => {
-    const [showAddProductPage, setShowAddProductPage] = useState(false);
+  const toggleFormVisibility = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleDeleteProductDetails = () => {
+    // Logic to delete product details
+    setProductDetails(false);
+  };
   
-    const handleButtonClick = () => {
-      setShowAddProductPage(true);
-    };
+  const handleUpdateProductDetails = () => {
+    setUpdateMode(true); // Enter update mode
+  };
 
+  const handleCancelUpdate = () => {
+    setUpdateMode(false); // Exit update mode
+  };
+
+  const handleUpdate = () => {
+    // Logic to update product details
+    console.log('Product details updated!');
+    setUpdateMode(false); // Exit update mode after updating
+  };
   return (
-
-
-    <div>
-      <button onClick={handleButtonClick}>Show Add Product Page</button>
-      {showAddProductPage && <AddProductPage />}
-   
-    
     <div className="container" style={{ position:'relative',transform: 'translateY(-2px)',width:'800px', margintop:'10px',marginRight: '100px', marginLeft: '190px'}}>
-      <h2 className="text-center text-black bg-primary p-3 mb-5 rounded-pill" style={{position:'relative', margin: '10px 0',boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15)', transform: 'translateY(-2px)',width:'1300px',marginRight: '-100px', marginLeft: '-16px',backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)' }}><h2 style={{marginleft:'-800px'}}>Add New Product</h2></h2>
-      <form className="add-product-form" style={{ display: 'flex', justifyContent: 'space-evenly', }}>
-        <div className="basic-details" style={{position:'relative', maxWidth: '1000px', marginTop: '0px', marginLeft: '50px', display: 'flex', flexDirection: 'row', height:'400px' }}>
+      <h2 className="text-center text-black bg-primary p-3 mb-5 rounded-pill" style={{position:'relative', margin: '10px 0',boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15)', transform: 'translateY(-2px)',width:'1300px',marginRight: '-100px', marginLeft: '-16px',backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)' }}><h2 style={{marginleft:'-800px',color:'white '}}>Add New Product</h2></h2>
+     
+      <div style={{  marginRight: '-800px'  }}>
+        <button 
+          type="button" 
+          style={{
+            backgroundColor: '#4CAF50',
+            border: 'none',
+            color: 'white',
+            padding: '10px 20px',
+            textAlign: 'center',
+            textDecoration: 'none',
+            display: 'inline-block',
+            fontSize: '16px',
+            margin: '4px 2px',
+            cursor: 'pointer',
+            borderRadius: '8px',
+            transition: 'background-color 0.3s ease',
+          }}
+          onClick={toggleFormVisibility}
+        >
+          <span style={{ marginRight: '5px',marginRight: '5px', fontWeight: 'bold' }}>+</span> Add Product
+        </button>
+      </div>
+
+
+     
+      {showForm && (
+ <form className="add-product-form" style={{ display: 'flex', justifyContent: 'space-evenly', }}>
+ <div className="basic-details" style={{position:'relative', maxWidth: '1000px', marginTop: '0px', marginLeft: '50px', display: 'flex', flexDirection: 'row', height:'400px' }}>
           <div style={{ marginRight: '20px',position:'relative'}}>
             <h3>Basic Details</h3>
             <div className="form-group" style={{color: 'black',backgroundImage: 'white',border: '1px solid black',position:'relative' }}>
@@ -120,49 +152,94 @@ const AddProductPage = () => {
             )}
 
             <div style={{ marginTop: '20px' }}>
-              <button type="button" className="btn btn-primary" onClick={handleSaveAndContinue} style={{backgroundImage: 'white',borderBlockColor:'black'}}>Save and Continue</button>
+            <button type="button" className="btn btn-primary" onClick={handleSaveAndContinue} style={{backgroundImage: 'white',borderBlockColor:'black'}}>Save and Continue</button>
             </div>
           </div>
         </div>
-      </form>
+        </form>
+    )}
 
-      {/* Display product details card */}
-      {Object.keys(productDetails).length > 0 && (
+
+
+
+ {/* Display product details card */}
+ {productDetails && (
         <div className="card" style={{ 
           maxWidth: '800px', 
-          // margin: '20px auto', 
-          // padding: 'px', 
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15)',
           display: 'flex',
-          // alignItems: 'center', // Center vertically
-          // backgroundColor:'transparent',
-          backgroundImage: 'black' ,
-          flexDirection: 'row'
+          flexDirection: 'row',
+          marginTop: '20px', // Add margin top for separation
+          position: 'relative' // Position relative for absolute positioning of delete button
         }}>
- <div style={{ display: 'inline-block', marginLeft: '100px', marginTop:'50px' }}>
-              {photoPreview && (
-              <img src={photoPreview} alt="Product Preview" style={{ width: '200px', height: 'auto',paddingleft:'200px' }} />
+          <div style={{ display: 'inline-block', marginLeft: '100px', marginTop: '50px' }}>
+            {photoPreview && (
+              <img src={photoPreview} alt="Product Preview" style={{ width: '200px', height: 'auto', paddingLeft: '200px' }} />
             )}
           </div>
           
-<div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '100px', marginTop: '40px',color: 'black', marginBottom:'20px'}}>
-  <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: 'black', borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '20px' }}>Product Details</h3>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Product Name: {productDetails.productName || 'Sample Product'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Description: {productDetails.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Category: {productDetails.category || 'Laboratory Equipment'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Subcategory: {productDetails.subCategory || 'Glassware'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Keywords: {productDetails.keywords || 'Flask, Laboratory, Chemistry'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Price: {productDetails.price || '$50'}</p>
-  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Unit of Measurement: {productDetails.unitOfMeasurement || 'Each'}</p>
-</div>
+          <div style={{ display: 'inline-block', textAlign: 'left', paddingLeft: '100px', marginTop: '40px', color: 'black', marginBottom: '20px' }}>
+            <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: 'black', borderBottom: '2px solid #333', paddingBottom: '5px', marginBottom: '20px' }}>Product Details</h3>
+            <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Product Name: {productDetails.productName || 'Sample Product'}</p>
+            <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Description: {productDetails.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}</p>
+  					<p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Category: {productDetails.category || 'Laboratory Equipment'}</p>
+ 						<p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Subcategory: {productDetails.subCategory || 'Glassware'}</p>
+            <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Keywords: {productDetails.keywords || 'Flask, Laboratory, Chemistry'}</p>
+  					<p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Price: {productDetails.price || '$50'}</p>
+ 					  <p style={{ fontSize: '16px', lineHeight: '1.6', marginBottom: '10px' }}>Unit of Measurement: {productDetails.unitOfMeasurement || 'Each'}</p>
+
+
+ {/* Buttons for update and delete */}
+ {updateMode ? (
+              <>
+                <button onClick={handleUpdate} style={{ marginRight: '5px',marginRight: '5px', fontWeight: 'bold' }}>Update</button>
+                <button onClick={handleCancelUpdate}>Cancel</button>
+              </>
+            ) : (
+              <button onClick={handleUpdateProductDetails}style={{
+                backgroundColor: '#58D68D',
+                border: 'none',
+                color: 'white',
+                padding: '2px 12px',
+                textAlign: 'center',
+                textDecoration: 'none',
+                display: 'inline-block',
+                fontSize: '14px',
+                margin: '10px 0',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                
+              }}  >Update</button>
+            )}
+
+
+
+            {/* Delete button */}
+            <button
+              type="button"
+              onClick={handleDeleteProductDetails}
+              style={{
+                backgroundColor: '#ff0000',
+                border: 'none',
+                color: 'white',
+                padding: '2px 12px',
+                textAlign: 'center',
+                textDecoration: 'none',
+                display: 'inline-block',
+                fontSize: '14px',
+                margin: '10px 0',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                
+              }}
+            >
+              Delete
+            </button>
+          </div>
         </div>
-        
-        
-        
       )}
-    </div>
     </div>
   );
 }
-}
+
 export default AddProductPage;
