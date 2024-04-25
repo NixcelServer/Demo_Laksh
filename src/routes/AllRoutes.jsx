@@ -2,8 +2,9 @@ import { Heading } from "@chakra-ui/react";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import SellerLeftMenu from "../pages/user/SellerLeftMenu";
 
-import AddProduct from "../pages/Admin/AddProduct";
+
 
 import AdminsPage from "../pages/Admin/AdminsPage";
 import Dashboard from "../pages/Admin/Dashboard";
@@ -17,12 +18,11 @@ import UOM from "../pages/Admin/UOM";
 
 
 import AdminNavbar from '../Components/AdminNavbar';
-import SellerLeftMenu from '../pages/Admin/SellerLeftMenu';
+
 
 import AddAdmin from '../pages/Admin/AddAdmin';
 import AddNewMachines from "../pages/Admin/AddNewMachines";
 import AddNewProduct from '../pages/Admin/AddNewProduct';
-
 
 
 import Home from "../pages/Home";
@@ -34,6 +34,9 @@ import Sign from "../pages/Sign";
 import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
 import Keywords from "../pages/Admin/Keywords";
+
+import sidebar from "../pages/user/sidebar";
+import BuyLeads from "../pages/user/buyleads";
 
 export default function AllRoutes() {
   return (
@@ -122,8 +125,35 @@ export default function AllRoutes() {
           path="/addNewProduct"
           element={
             <>
-              
+              {/* <MainPage/> */}
+              {/* <AdminNavbar/> */}
+              <SellerLeftMenu/>
               <AddNewProduct />
+            </>
+          }
+        />
+
+        <Route />
+
+        <Route
+          path="/sidebar"
+          element={
+            <>
+             
+            <sidebar/>
+            </>
+          }
+        />
+
+        <Route />
+
+        <Route
+          path="/buyleads"
+          element={
+            <>
+            <SellerLeftMenu/>
+             <BuyLeads/>
+            
             </>
           }
         />

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Heading,
@@ -8,7 +9,6 @@ import {
   Grid,
   Stack,
 } from "@chakra-ui/react";
-import React from "react";
 import {
   AiFillAndroid,
   AiFillApple,
@@ -33,7 +33,20 @@ export function Footeritems({ title, des1, des2, des3 }) {
 
 export default function Footer() {
   return (
-    <Box pl="10%" pr="10%" pt="20px" pb="20px" bg="gray.200">
+    <Box
+      as="footer"
+      pl="10%"
+      pr="10%"
+      pt="20px"
+      pb="20px"
+      bg="gray.200"
+      position="fixed"
+      bottom="0"
+      left="0"
+      right="0"
+      zIndex="10"
+      width="100%"
+    >
       <Stack
         justifyContent={"space-between"}
         pb="20px"

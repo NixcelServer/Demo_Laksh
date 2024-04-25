@@ -95,7 +95,7 @@ export default function Navbar() {
                 {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
                 {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
             </Box>
-                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} onClick={()=>{navigate('/')}}>B2B Portal</Heading>
+                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} onClick={()=>{navigate('/')}}>Laksh</Heading>
            
           </HStack>
           {

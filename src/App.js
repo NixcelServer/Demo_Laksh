@@ -1,13 +1,15 @@
 import "./App.css";
 
+// If you want adminNavbar then only add jsx files to these routes
 
 import Footer from "./Components/home/Footer";
 import Navbar from "./Components/home/Nav";
 import PlywoodProductPage from "./pages/Products/PlywoodProductPage";
 
-
 import AllRoutes from "./routes/AllRoutes";
 import { useLocation } from "react-router-dom";
+
+
 function App() {
   const location = useLocation();
   return (
@@ -28,7 +30,7 @@ function App() {
       )}
 
 
-      
+     
 
       <AllRoutes />
 
@@ -38,7 +40,6 @@ function App() {
       location.pathname === "/keywords" ||
       location.pathname === "/addProduct" ||
       location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
-
       location.pathname === "/addNewProduct" ||
       location.pathname === "/admin" ||
       location.pathname === "/sell"? (
@@ -47,6 +48,9 @@ function App() {
       ) : (
         <Footer />
       )}
+
+
+
 
     </div>
   );
