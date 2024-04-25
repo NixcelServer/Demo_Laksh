@@ -506,7 +506,8 @@ export default function CompanyRegistrationForm() {
                 //</Flex>
                 ) : (
                   //<Flex justifyContent="flex-end">
-                    <Button  width="" mt={4} float="right" mr={4}  type="submit" colorScheme="teal">
+                    <Button  width="" mt={4} float="right" mr={4}  type="submit" colorScheme="teal" onClick={onSubmit}>
+                      {/* //onClick={onSubmit} */}
                       Register
                     </Button>
                   //</Flex>
