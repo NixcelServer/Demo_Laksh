@@ -8,6 +8,7 @@ import AddProduct from "../pages/Admin/AddProduct";
 import AdminsPage from "../pages/Admin/AdminsPage";
 import Dashboard from "../pages/Admin/Dashboard";
 import Categories from "../pages/Admin/Categories";
+import AssignSubcategory from "../pages/Admin/AssignSubcategory";
 
 import UOM from "../pages/Admin/UOM";
 
@@ -67,24 +68,30 @@ export default function AllRoutes() {
           }
         />
 
-       <Route 
-       path="/sell"
-       element={
-        <>
-          <AdminNavbar />
-          <Sell/>
-          </>
-       }
-       />
-       
-        <Route
+
+<Route
           path="/categories"
           element={
             <>
               <AdminNavbar />
-              {/* <Dashboard /> */}
+              
               <Categories/>
+              
+            </>
+          }
+        />
+
+
+       
+        <Route
+          path="/AssignSubcategory/:encryptedCategoryId"
+          element={
+            <>
+              <AdminNavbar />
+              {/* <Dashboard /> */}
+              {/* <Categories/> */}
               {/* <AdminDashboard/> */}
+              <AssignSubcategory/>
             </>
           }
         />

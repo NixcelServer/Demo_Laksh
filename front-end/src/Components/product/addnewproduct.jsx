@@ -1,10 +1,17 @@
 
-
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import CryptoJS from 'crypto-js';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories, getSubCategories} from '../../redux/Admin/Category/category.action';
+import { getKeywords } from '../../redux/Admin/Keywords/keyword.action';
+import { getUOM } from '../../redux/Admin/UOM/uom.action';
 
 const AddProductPage = () => {
   const [photoPreview, setPhotoPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [unitOfMeasurement, setUnitOfMeasurement] = useState([]);
   const [productDetails, setProductDetails] = useState({
     productName: '',
     description: '',
@@ -16,8 +23,96 @@ const AddProductPage = () => {
     unitOfMeasurement: '',
     photo: null,
   });
+  const dispatch = useDispatch();
+  //const [keywords, setKeywords] = useState([]); // State for keywords
+ 
+  
   // Access categories from Redux state
   const categories = useSelector(state => state.categoryReducer.categories);
+  console.log("in categoreis",categories);
+
+  const fetchCategories = async () => {
+   
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/categories");
+      const categories = response.data;
+      dispatch(getCategories(categories));
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      //setError("Failed to fetch keywords. Please try again later.");
+    } finally {
+      //setLoading(false); // Set loading state to false regardless of success or failure
+    }
+  };
+  
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  //get the subcategories from the reducer
+  const subCategories = useSelector(state => state.categoryReducer.subCategories);
+  console.log("in sub cat",subCategories);
+  const fetchSubCategories = async () => {
+
+   
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/sub-categories");
+      const subCategories = response.data;
+      dispatch(getSubCategories(subCategories));
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      //setError("Failed to fetch keywords. Please try again later.");
+    } 
+
+  };
+  useEffect(() => {
+    fetchSubCategories();
+  }, []);
+  
+  const keywords = useSelector(state => state.keywordReducer.keywords);
+  console.log("in keyword keywords",keywords);
+  const fetchKeywords = async () => {
+    
+    setLoading(true); // Set loading state to true
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/keywords");
+      const keywords = response.data;
+      dispatch(getKeywords(keywords));
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      setError("Failed to fetch keywords. Please try again later.");
+    } finally {
+      setLoading(false); // Set loading state to false regardless of success or failure
+
+    }
+
+  };
+
+  
+  useEffect(() => {
+    fetchKeywords();
+  }, []);
+
+  const uoms = useSelector(state => state.uomReducer.uoms);
+  console.log("in uom ",uoms);
+  const fetchUOM = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/unit-of-measurements");
+      const uom = response.data // Assuming the category data is under the "message" key
+      //console.log("delete", keywords)
+
+      dispatch(getUOM(uom));
+
+    } catch (error) {
+      console.error("Error fetching keywords:", error);
+      return null; // Return null or handle the error as needed
+    }
+
+  };
+
+  useEffect(() => {
+    fetchUOM();
+  }, []);
 
   const handleSaveChanges = () => {
     // Logic to save changes
@@ -39,12 +134,68 @@ const AddProductPage = () => {
     }
   };
 
-  const handleSaveAndContinue = () => {
-    // Logic to save changes and continue
-    console.log('Changes saved and continue to next step!');
+  const handleSaveAndContinue = async () => {
+    const encryptedCategoryId = CryptoJS.AES.encrypt(productDetails.category, 'secret_key').toString();
+    const encryptedSubCategory = CryptoJS.AES.encrypt(productDetails.subCategory, 'secret_key').toString();
+     const encryptedKeywords = CryptoJS.AES.encrypt(productDetails.keywords, 'secret_key').toString();
+     const encryptedUOM = CryptoJS.AES.encrypt(productDetails.unitOfMeasurement, 'secret_key').toString();
+
+     // Prepare the product details with the encrypted category ID
+  const productData = {
+    ...productDetails,
+    category: encryptedCategoryId,
+    subCategory: encryptedSubCategory,
+    keywords: encryptedKeywords,
+    unitOfMeasurement: encryptedUOM
   };
 
+    // Logic to save changes and continue
+    axios.post("http://127.0.0.1:8000/api/product/store", productDetails).then(response => {
+      console.log("Data saved successfully:", response.data);
+      setProductDetails({
+            productName: '',
+            description: '',
+            category: '',
+            subCategory: '',
+            keywords: '',
+            price: '',
+            quantity: '',
+            unitOfMeasurement: '',
+            photo: null,
+          });
+          setPhotoPreview(null);
+        
+    }).catch(err => {
+        console.log(err)
+      })
+
+    // try {
+    //   console.log(productDetails)
+    //   // Make HTTP request to save data
+    //   const response = await axios.post("http://127.0.0.1:8000/api/product/store", productDetails);
+    //   console.log("Data saved successfully:", response.data);
+    //   // Clear form fields after successful save
+    //   // setProductDetails({
+    //   //   productName: '',
+    //   //   description: '',
+    //   //   category: '',
+    //   //   subCategory: '',
+    //   //   keywords: '',
+    //   //   price: '',
+    //   //   quantity: '',
+    //   //   unitOfMeasurement: '',
+    //   //   photo: null,
+    //   // });
+    //   setPhotoPreview(null);
+    // } catch (error) {
+    //   console.error("Error saving data:", error);
+    //   // Handle error
+    // }
+  };
+  
+    console.log(productDetails)
   return (
+
     <div className="container">
       <h2 className="text-center text-white bg-primary p-3 mb-5 rounded-pill" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15)', transform: 'translateY(-2px)' }}>Add New Product</h2>
       <form className="add-product-form" style={{ display: 'flex', justifyContent: 'space-evenly' }}>
@@ -52,12 +203,13 @@ const AddProductPage = () => {
           <div style={{ marginRight: '20px' }}>
             <h3>Basic Details</h3>
             <div className="form-group" style={{ backgroundColor: 'bisque' }}>
-              <label htmlFor="product-name">Product Name:</label>
-              <input type="text" id="product-name" name="product-name" />
-            </div>
+          <label htmlFor="product-name">Product Name:</label>
+          <input type="text" id="product-name" name="prod_name" value={productDetails.productName} onChange={(e) => setProductDetails({ ...productDetails, productName: e.target.value })} />
+           </div>
 
             <div className="form-group" style={{ backgroundColor: 'bisque' }} >
               <label htmlFor="description">Product Description:</label>
+              <input type="text" id="description" name="prod_description" value={productDetails.description} onChange={(e) => setProductDetails({ ...productDetails, description: e.target.value })}/>
               <textarea id="description" name="description" rows="1" />
             </div>
 
@@ -66,29 +218,54 @@ const AddProductPage = () => {
               <select id="category" name="category" value={productDetails.category} onChange={(e) => setProductDetails({ ...productDetails, category: e.target.value })}>
                 <option value="">Select Category</option>
                 {categories.map(category => (
-                  <option key={category.id} value={category.name}>{category.name}</option>
+                  <option key={category.id} value={category.cat_name}>{category.cat_name}</option>
                 ))}
               </select>
             </div>
 
             <div className="form-group" style={{ backgroundColor: 'bisque' }}>
-              <label htmlFor="subCategory">Subcategory:</label>
-              <input type="text" id="subCategory" name="subCategory" />
-            </div>
+            <label htmlFor="subCategory">Subcategory:</label>
+            <select
+              id="subCategory"
+              name="subCategory"
+              value={productDetails.subCategory}
+              onChange={(e) => setProductDetails({ ...productDetails, subCategory: e.target.value })}
+            >
+              <option value="">Select Subcategory</option>
+              {subCategories.map(subCategory => (
+                <option key={subCategory.id} value={subCategory.sub_cat_name}>{subCategory.sub_cat_name}</option>
+              ))}
+            </select>
+          </div>
 
-            <div className="form-group" style={{ backgroundColor: 'bisque' }}>
+          <div className="form-group">
               <label htmlFor="keywords">Keywords:</label>
-              <input type="text" id="keywords" name="keywords" />
+              <select id="keywords" name="keywords" value={productDetails.keywords} onChange={(e) => setProductDetails({...productDetails, keywords: e.target.value})}>
+                <option value="">Select Keywords</option>
+                {keywords.map(keyword => (
+                  <option key={keyword.id} value={keyword.keyword_name}>{keyword.keyword_name}</option>
+                ))}
+              </select>
             </div>
-
+            {/* <div className="form-group" style={{ backgroundColor: 'bisque' }}>
+          <label htmlFor="product-name">Product Name:</label>
+          <input type="text" id="product-name" name="prod_name" value={productDetails.productName} onChange={(e) => setProductDetails({ ...productDetails, productName: e.target.value })} />
+           </div> */}
             <div className="form-group" style={{ backgroundColor: 'bisque'}}>
               <label htmlFor="price">Price:</label>
-              <input type="number" id="price" name="price"/>
+              <input type="number" id="price" name="prod_price" value={productDetails.price} onChange={(e)=>setProductDetails({ ...productDetails, price: e.target.value })}/>
             </div>
 
-            <div className="form-group" style={{ backgroundColor: 'bisque' }}>
-              <label htmlFor="unitOfMeasurement">Unit of Measurement:</label>
-              <input type="text" id="unitOfMeasurement" name="unitOfMeasurement" />
+            <div className="form-group"  style={{ backgroundColor: 'bisque' }}> 
+              <label htmlFor="uoms">Unit of Measurement:</label>
+              <select id = "uoms" name="uoms" value={productDetails.uoms} 
+              onChange={(e)=>setProductDetails({...productDetails,uoms: e.target.value})}>
+                <option value="">Select UOM</option>
+                {uoms.map(unit=>(
+                  <option key={unit.id} value={unit.unit_name}>{unit.unit_name}</option>
+                ))}
+              </select> 
+              
             </div>
           </div>
 
@@ -108,7 +285,8 @@ const AddProductPage = () => {
             )}
 
             <div style={{ marginTop: '20px' }}>
-              <button type="button" className="btn btn-primary" onClick={handleSaveAndContinue}>Save and Continue</button>
+              <button type="button" className="btn btn-primary" onClick={handleSaveAndContinue}>
+                Save and Continue</button>
             </div>
           </div>
         </div>
