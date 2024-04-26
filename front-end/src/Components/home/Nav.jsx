@@ -134,7 +134,7 @@ export default function Navbar() {
               justifyContent='space-evenly'
               pr='15px'
               display={{ base: 'none', md: 'flex' }}>
-                <Button flexDirection={'column'} size='lg' p='10px' _hover={{ color:'teal' }} onClick={()=>{navigate('/sell')}} >
+                <Button flexDirection={'column'} size='lg' p='10px' _hover={{ color:'teal' }} onClick={()=>{navigate('/register')}} >
                      <Icon   as={MdSell} boxSize={5}  /> 
                      <Text  fontWeight={'bold'}>sell</Text>
                 </Button>

@@ -15,11 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from 'react-redux';
 import { FiHome, FiSettings, FiMenu } from "react-icons/fi";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate,useHistory } from "react-router-dom";
 import { GrUserAdmin } from "react-icons/gr";
 import { RiProductHuntLine } from "react-icons/ri";
 import { FiUsers } from "react-icons/fi";
 import { authLogout } from "../redux/auth/auth.action";
+
 
 // import { AppBar, Toolbar, Typography, Menu, MenuItem } from '@mui/material';
 // import MenuIcon from '@mui/icons-material/Menu';
@@ -119,10 +120,17 @@ const SidebarContent = ({ onClose, ...rest }) => {
 };
 
 const UpperBarContent = ({ onClose, ...rest }) => {
+
   const dispatch = useDispatch()
     const navigate = useNavigate();
     
-  const handleLogout=()=>{
+  
+  //const history = useHistory();
+
+  const handleLogout = () => {
+    // Clear user session data
+    sessionStorage.removeItem('user');
+  };
 
     
     dispatch(authLogout());

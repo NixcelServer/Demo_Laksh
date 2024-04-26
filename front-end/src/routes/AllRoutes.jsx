@@ -29,6 +29,8 @@ import Login from "../pages/Login";
 import AdminLogin from "../pages/Admin/AdminLogin";
 import Sign from "../pages/Sign";
 
+import CompanyRegistrationForm from "../Components/company/CompanyRegistrationForm";
+
 import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
 import Keywords from "../pages/Admin/Keywords";
@@ -49,6 +51,10 @@ export default function AllRoutes() {
         <Route path={"/sign"} element={<Sign />} />
         <Route path={"/plywood"} element={<PlywoodProductPage/>} />
         <Route path="*" element={<Heading h="55vh">Page not found</Heading>} />
+        {/* <Route path="/companyregistrationform" element={<CompanyRegistrationForm />} /> */}
+        <Route path="/register" element={<CompanyRegistrationForm />} />
+        
+
         <Route
           path="/adminDashboard"
           element={
@@ -59,6 +65,7 @@ export default function AllRoutes() {
             </>
           }
         />
+
 
 <Route
           path="/categories"
@@ -71,6 +78,8 @@ export default function AllRoutes() {
             </>
           }
         />
+
+
        
         <Route
           path="/AssignSubcategory/:encryptedCategoryId"
