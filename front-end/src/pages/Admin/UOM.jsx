@@ -7,12 +7,16 @@ import { useRef } from 'react';
 
 
 
+
 const UOM = () => {
+
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [uomToDelete, setUomToDelete] = useState(null);
   const closeButtonRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+
   const uoms = useSelector(state => state.uomReducer.uoms);
   console.log("delete", uoms);
 
@@ -40,30 +44,11 @@ const UOM = () => {
     fetchUOM();
   }, []);
 
+
   const handleDelete = async (uom) => {
 
     setUomToDelete(uom);
     setShowDeleteConfirmation(true);
-    
-    // try {
-    //   const userString =  sessionStorage.getItem('user');
-    //   const user = JSON.parse(userString);
-    //   const encUserId = user.encUserId;
-  
-    //   // Include both encUserId and encKeywordId in the payload
-    //   const payload = {
-    //     encUserId
-    //   };
-  
-    //   // Perform delete operation using encKeywordId and encUserId
-    //   const response = await axios.delete(`http://127.0.0.1:8000/api/unit-of-measurements/${encUomId}`, { data: payload });      
-    //   //console.log("Keyword deleted successfully:", response.data);
-      
-    //   // Refetch keywords after deletion
-    //   fetchUOM();
-    // } catch (error) {
-    //   console.error("Error deleting keyword:", error);
-    // }
   };
 
   const handleConfirmDelete = async() => {
@@ -99,13 +84,17 @@ const UOM = () => {
   const handleSaveChanges = async (event) => {
     
     event.preventDefault();
+
     const userString = sessionStorage.getItem('user');
     // Parse the user object from the string format stored in sessionStorage
     const user = JSON.parse(userString);
 
     // Retrieve the encUserId from the user object
+
    // const encUserId = user.encUserId;
    const encUserId = 'dDJUd0VsSFlIMmM9';
+
+
     console.log(encUserId);
 
     const payload = {
@@ -115,6 +104,7 @@ const UOM = () => {
     
 
     try {
+
       console.log("in try block");
       
       console.log(payload);
@@ -129,7 +119,7 @@ const UOM = () => {
        navigate("/UOM");
        console.log("navigate");
     } catch (error) {
-      //console.error("Error adding category:", error);
+     //console.error("Error adding category:", error);
       // setError(error.message); // Set error state
     }
   }
@@ -181,6 +171,7 @@ const UOM = () => {
                               <td>{index + 1}</td>
                               <td>{uom.unit_name}</td> {/* Displaying the keyword name */}
                               <td>
+
                               <button
                                 type="button"
                                 className="btn btn-danger btn-sm"
@@ -189,6 +180,7 @@ const UOM = () => {
                               >
                                 Delete
                               </button>                              </td>
+
                             </tr>
                           ))}
                         </tbody>

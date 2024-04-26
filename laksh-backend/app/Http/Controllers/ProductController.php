@@ -25,8 +25,10 @@ class ProductController extends Controller
         $prod->prod_price = $request->prodPrice;
         $prod->tbl_uom_id = EncDecHelper::encDecId($request->prodUOM,'decrypt');
         $prod->prod_min_order_qty = $request->minOrderQty;
+        
         $prod->add_date = Date::now()->toDateString();
         $prod->add_time = Date::now()->toTimeString();
+        
         
         $prod->save();
         return response()->json($prod);

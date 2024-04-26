@@ -29,9 +29,16 @@ import Login from "../pages/Login";
 import AdminLogin from "../pages/Admin/AdminLogin";
 import Sign from "../pages/Sign";
 
+import CompanyRegistrationForm from "../Components/company/CompanyRegistrationForm";
+
 import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
 import Keywords from "../pages/Admin/Keywords";
+import SellerDashboard from "../pages/User/SellerDashboard";
+import SellerLeftMenu from "../pages/User/SellerLeftMenu";
+import AddProducts from "../pages/Products/AddProducts";
+import Buyleads from "../pages/User/Buyleads";
+import CompanySetup from "../pages/Company/CompanySetup";
 
 export default function AllRoutes() {
   return (
@@ -44,6 +51,10 @@ export default function AllRoutes() {
         <Route path={"/sign"} element={<Sign />} />
         <Route path={"/plywood"} element={<PlywoodProductPage/>} />
         <Route path="*" element={<Heading h="55vh">Page not found</Heading>} />
+        {/* <Route path="/companyregistrationform" element={<CompanyRegistrationForm />} /> */}
+        <Route path="/register" element={<CompanyRegistrationForm />} />
+        
+
         <Route
           path="/adminDashboard"
           element={
@@ -54,6 +65,7 @@ export default function AllRoutes() {
             </>
           }
         />
+
 
 <Route
           path="/categories"
@@ -66,6 +78,8 @@ export default function AllRoutes() {
             </>
           }
         />
+
+
        
         <Route
           path="/AssignSubcategory/:encryptedCategoryId"
@@ -126,13 +140,48 @@ export default function AllRoutes() {
           }
         />
 
+        <Route
+          path="/add-products"
+          element={
+            <>
+              <SellerLeftMenu />
+              < AddProducts/>
+            </>
+          }
+        />
+
+        <Route
+          path="/buyleads"
+          element={
+            <>
+              <SellerLeftMenu />
+              < Buyleads/>
+            </>
+          }
+        />
+
+        <Route
+          path="/company-setup"
+          element={
+            <>
+              <SellerLeftMenu />
+              <CompanySetup />
+            </>
+          }
+        />
+
         <Route />
 
 
        
            
             <Route path='/addNewMachines' element={<><AdminNavbar/><AddNewMachines/></>}/><Route />
-            <Route path='/sell' element={<Sell/>} />
+            <Route path='/sell'element={
+            <>
+              <SellerDashboard />
+              <SellerLeftMenu />
+            </>
+          } />
 
       </Routes>
     </>

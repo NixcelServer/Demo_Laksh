@@ -76,7 +76,7 @@ export default function MainPage() {
           >
             <VStack>
                 <Icon   as={MdHome} boxSize={6}  /> 
-                <Text > Dashboard</Text>
+                <Text > Registration Form</Text>
             </VStack>
            
           </Tab>

@@ -1,19 +1,26 @@
 import { useNavigate } from "react-router-dom";
 import { getKeywords } from "../../redux/Admin/Keywords/keyword.action";
 import axios from "axios";
+
 import { useEffect, useRef, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 
 
 
 const Keywords = () => {
+
   const closeButtonRef = useRef(null);
   const navigate = useNavigate;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const keywords = useSelector(state => state.keywordReducer.keywords);
   
+
+  
+  console.log("delete", keywords);
+
 
   const dispatch = useDispatch();
 
@@ -30,6 +37,7 @@ const Keywords = () => {
   const [keywordName, setNewKeywordName] = useState("");
 
   const fetchKeywords = async () => {
+
     setLoading(true); // Set loading state to true
     try {
       const response = await axios.get("http://127.0.0.1:8000/api/keywords");
@@ -40,6 +48,7 @@ const Keywords = () => {
       setError("Failed to fetch keywords. Please try again later.");
     } finally {
       setLoading(false); // Set loading state to false regardless of success or failure
+
     }
 
   };
@@ -47,6 +56,7 @@ const Keywords = () => {
   useEffect(() => {
     fetchKeywords();
   }, []);
+
 
   const handleDelete = async (encKeywordId) => {
     try {
@@ -75,10 +85,12 @@ const Keywords = () => {
     const userString = sessionStorage.getItem('user');
     const user = JSON.parse(userString);
     const encUserId = user.encUserId;
+    console.log(encUserId);
 
     const payload = {
       keywordName, encUserId
     }
+
     
     try {
       let response = await axios.post("http://127.0.0.1:8000/api/keywords", payload);
@@ -94,13 +106,16 @@ const Keywords = () => {
   } finally {
       setLoading(false); // Set loading state to false regardless of success or failure
   }
+
   }
     return (
       
       <div>
+
         <div>
       {/* Error message display */}
       {error && <div className="error-message">{error}</div>}
+
 
         <div class='content-body'>
           <div class='row page-titles mx-0'>
@@ -147,7 +162,11 @@ const Keywords = () => {
                               <td>{index + 1}</td>
                               <td>{keyword.keyword_name}</td> {/* Displaying the keyword name */}
                               <td>
+
                               <button onClick={() => handleDelete(keyword.encKeywordId)}>Delete</button>
+
+                                <button>Delete</button>
+
                               </td>
                             </tr>
                           ))}
@@ -201,7 +220,9 @@ const Keywords = () => {
                   </div>
                   <div class='modal-footer'>
                     <button
+
                     ref={closeButtonRef}
+
                       type='button'
                       class='btn btn-secondary'
                       data-dismiss='modal'
@@ -215,7 +236,6 @@ const Keywords = () => {
             </div>
           </div>
         </div>
-      </div>
       </div>
     );
   };
