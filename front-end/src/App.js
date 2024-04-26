@@ -19,7 +19,7 @@ function App() {
       location.pathname === "/addProduct" ||
       location.pathname === "/addNewProduct" ||
       location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
-      location.pathname === "/sell" ||
+      
       location.pathname === "/admin" ? (
 
         false
@@ -40,8 +40,7 @@ function App() {
       location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
 
       location.pathname === "/addNewProduct" ||
-      location.pathname === "/admin" ||
-      location.pathname === "/sell"? (
+      location.pathname === "/admin" ? (
 
         false
       ) : (

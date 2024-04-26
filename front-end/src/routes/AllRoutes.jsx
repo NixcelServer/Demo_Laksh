@@ -32,6 +32,11 @@ import Sign from "../pages/Sign";
 import Sell from '../pages/sell';
 import PlywoodProductPage from "../pages/Products/PlywoodProductPage";
 import Keywords from "../pages/Admin/Keywords";
+import SellerDashboard from "../pages/User/SellerDashboard";
+import SellerLeftMenu from "../pages/User/SellerLeftMenu";
+import AddProducts from "../pages/Products/AddProducts";
+import Buyleads from "../pages/User/Buyleads";
+import CompanySetup from "../pages/Company/CompanySetup";
 
 export default function AllRoutes() {
   return (
@@ -126,13 +131,48 @@ export default function AllRoutes() {
           }
         />
 
+        <Route
+          path="/add-products"
+          element={
+            <>
+              <SellerLeftMenu />
+              < AddProducts/>
+            </>
+          }
+        />
+
+        <Route
+          path="/buyleads"
+          element={
+            <>
+              <SellerLeftMenu />
+              < Buyleads/>
+            </>
+          }
+        />
+
+        <Route
+          path="/company-setup"
+          element={
+            <>
+              <SellerLeftMenu />
+              <CompanySetup />
+            </>
+          }
+        />
+
         <Route />
 
 
        
            
             <Route path='/addNewMachines' element={<><AdminNavbar/><AddNewMachines/></>}/><Route />
-            <Route path='/sell' element={<Sell/>} />
+            <Route path='/sell'element={
+            <>
+              <SellerDashboard />
+              <SellerLeftMenu />
+            </>
+          } />
 
       </Routes>
     </>

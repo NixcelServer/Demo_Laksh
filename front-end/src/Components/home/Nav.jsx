@@ -58,6 +58,9 @@ export default function Navbar() {
 
 
      dispatch(authLogout())
+     window.location.reload();
+
+     navigate('/');
 
     
   }

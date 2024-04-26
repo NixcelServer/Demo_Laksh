@@ -29,6 +29,8 @@ class AuthController extends Controller
         //if user exists validate password and redirect to respective page
         if (strcmp($user->u_password, $encPass) === 0) {
             $user->encUserId = EncDecHelper::encDecId($user->tbl_user_id,'encrypt');
+
+            
             
             //unset some data while sending to the user
             unset($user->tbl_user_id,$user->u_password,$user->u_designation,$user->add_date,$user->add_time,$user->update_date,
@@ -114,8 +116,13 @@ class AuthController extends Controller
         if (strcmp($user->u_password, $encPass) === 0) {
             $user->encUserId = EncDecHelper::encDecId($user->tbl_user_id,'encrypt');
 
-
+            $companyId = Company::where('tbl_user_id',$user->tbl_user_id)->value('tbl_company_id');
+            $encCompanyId = EncDecHelper::encDecId($companyId,'encrypt');
+            $user->encCompanyId = $encCompanyId;
             // Unset the non-encrypted ID
+            unset($user->tbl_user_id,$user->u_password,$user->u_designation,$user->add_date,$user->add_time,$user->update_date,
+                    $user->update_time,$user->verified_by,$user->verified_date,
+                    $user->verified_time,$user->flag);
            // unset($user->tbl_user_id,$user->u_password);
             return response()->json(['user' => $user], 200);
         }else {
