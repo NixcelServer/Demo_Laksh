@@ -45,8 +45,7 @@ const Categories = () => {
   const handleDelete = async (category) => {
     setCategoryToDelete(category);
     setShowDeleteConfirmation(true);
-   
-    
+
   };
 
   const handleSaveChanges = async (event) => {

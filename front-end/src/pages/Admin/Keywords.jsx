@@ -24,6 +24,16 @@ const Keywords = () => {
 
   const dispatch = useDispatch();
 
+  // Updated mock data with only "Category 1"
+  const mockCategories = [
+    { id: 1, cat_name: "Category 1", add_date: "2024-04-18" }
+  ];
+
+  const fetchCategories = () => {
+    // Simulate fetching data from API (useEffect used for simulation)
+    dispatch(getCategories(mockCategories));
+  };
+
   const [keywordName, setNewKeywordName] = useState("");
 
   const fetchKeywords = async () => {
