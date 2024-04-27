@@ -21,11 +21,13 @@ const Buyleads = (buyLead) => {
       
     return (
       
+      
       <div>
         <input
     type="text"
     placeholder="Search Buy Leads......"
     style={{
+      paddingBottom: '100px',
       width: '500px',
       padding: '10px',
       marginBottom: '20px',

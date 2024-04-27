@@ -31,7 +31,7 @@ const Keywords = () => {
 
   const fetchCategories = () => {
     // Simulate fetching data from API (useEffect used for simulation)
-    dispatch(getCategories(mockCategories));
+    dispatch(getKeywords(mockCategories));
   };
 
   const [keywordName, setNewKeywordName] = useState("");
@@ -110,7 +110,7 @@ const Keywords = () => {
   }
     return (
       
-      <div>
+      
 
         <div>
       {/* Error message display */}
@@ -229,7 +229,14 @@ const Keywords = () => {
                     >
                       Close
                     </button>
-                    <button type='submit' class='btn btn-primary' onClick={handleSaveChanges} />
+                    <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSaveChanges}
+                    style={{ marginTop: '0px' }}
+                  >
+                    Submit
+                  </button>                  
                   </div>
                 </form>
               </div>

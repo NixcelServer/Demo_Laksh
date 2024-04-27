@@ -68,7 +68,7 @@ import {
               <div className='col-lg-3 col-sm-6'>
                 <div className='card gradient-2'>
                   <div className='card-body'>
-                    <h3 className='card-title text-white'>Total Posts</h3>
+                    <h3 className='card-title text-white'>Total-- Posts</h3>
                     <div className='d-inline-block'>
                       <h2 className='text-white'>8541</h2>
                       <p className='text-white mb-0'>Jan - March 2024</p>
@@ -80,7 +80,7 @@ import {
                 </div>
               </div>
               <div className='col-lg-3 col-sm-6'>
-                <div className='card gradient-3'>
+                <div className='card gradient-1'>
                   <div className='card-body'>
                     <h3 className='card-title text-white'>Client Visited</h3>
                     <div className='d-inline-block'>
@@ -94,7 +94,7 @@ import {
                 </div>
               </div>
               <div className='col-lg-3 col-sm-6'>
-                <div className='card gradient-4'>
+                <div className='card gradient-2'>
                   <div className='card-body'>
                     <h3 className='card-title text-white'>
                       Companies Registered

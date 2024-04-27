@@ -40,7 +40,7 @@ export default function Footer() {
         flexDir={{ base: "column", md: "row" }}
       >
         <Heading size={"md"}>We are here to help you!</Heading>
-        <HStack alignItems={"center"}>
+        {/* <HStack alignItems={"center"}>
           <Text>Go Mobile:</Text>
           <Box>
             <Icon as={AiFillAndroid} boxSize={7} />
@@ -52,7 +52,7 @@ export default function Footer() {
             <Icon color={"blue.400"} as={AiFillLinkedin} boxSize={7} />
             <Icon color={"skyblue"} as={AiFillTwitterSquare} boxSize={7} />
           </Box>
-        </HStack>
+        </HStack> */}
       </Stack>
       <Box>
         <Grid

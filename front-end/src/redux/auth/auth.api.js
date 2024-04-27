@@ -7,6 +7,7 @@ export const signAPI =async (payload)=>{
 }
 
 export const loginAPI =async (payload)=>{
+    debugger
     const res = await axios.post(`http://127.0.0.1:8000/api/logsin`, payload);
     console.log("Response:", res);
         return res.data

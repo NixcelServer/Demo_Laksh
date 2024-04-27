@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 
 const SellerLeftMenu = () => {
     return (
-        <div className="left-menu" style={{ position:'fixed  ',width: '190px', backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)', margintop:'100px',padding: '20px',height:'100%    ',}}>
+        <div className="left-menu" style={{ position:'fixed',width: '130px', margintop:'200px',padding: '20px',height:'100%',backgroundColor: '#f0f0f0'}}>
           <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
-            <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-              <a href="/sell" style={{ textDecoration: 'none', color: '#fff', display: 'flex', alignItems: 'center' }}>
-                {/* <img src="/images/userLogo.png" alt="Dashboard Logo" style={{ width: '30px', marginRight: '10px', borderRadius: '0%' }} /> */}
+            
+            <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px', margintop:'-100px' }}>
+              <a href="/sell" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>
+                  {/* <img src="/images/userLogo.png" alt="Dashboard Logo" style={{ width: '30px', marginRight: '10px', borderRadius: '0%' }} /> */}
                 Dashboard
               </a>
             </li>
     
-            <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-              <a href="#" style={{ textDecoration: 'none', color: '#fff', display: 'flex', alignItems: 'center' }}>
+            <li  style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px' }}>
+              <a href="#" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>
               {/* <img src="/images/leadmanagerlogo.png" alt="Dashboard Logo" style={{ width: '30px', marginRight: '08px' }} /> */}
     
                 Lead Manager
@@ -22,20 +23,20 @@ const SellerLeftMenu = () => {
             </li>
 
             <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px' }}>
-          <Link to="/company-setup" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>Company Setup</Link>
+          <Link to="/company-setup" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>Company Setup</Link>
         </li>
           
             <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px' }}>
-          <Link to="/buyleads" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>Buy Leads</Link>
+          <Link to="/buyleads" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>Buy Leads</Link>
         </li>
             <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px' }}>
-              <a href="/add-products" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>Products</a>
+              <a href="/add-products" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>Products</a>
             </li>
             <li style={{ padding: '10px 0', borderBottom: '1px solid #34495e', marginBottom: '20px' }}>
-              <a href="#" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>Photos and Docs</a>
+              <a href="#" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>Photos and Docs</a>
             </li>
             <li style={{ padding: '10px 0', marginBottom: '20px' }}>
-              <a href="#" style={{ textDecoration: 'none', color: '#fff', display: 'block' }}>Settings</a>
+              <a href="#" style={{ textDecoration: 'none', color: 'black', display: 'block' }}>Settings</a>
             </li>
           </ul>
         </div>

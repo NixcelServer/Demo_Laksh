@@ -44,6 +44,14 @@ function App() {
       location.pathname === "/AssignSubcategory/:encryptedCategoryId" ||
 
       location.pathname === "/addNewProduct" ||
+      location.pathname ==="/Dashboard" ||
+      location.pathname === "/buyleads" ||
+      location.pathname === "/SellerLeftMenu" ||
+      location.pathname === "/SellerDashboard" ||
+      location.pathname === "/add-products" ||
+      location.pathname === "/AssignSubcategory" ||
+      location.pathname === "/sell" ||
+
       location.pathname === "/admin" ? (
 
         false

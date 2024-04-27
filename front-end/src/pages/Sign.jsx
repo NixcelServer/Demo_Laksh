@@ -134,7 +134,7 @@ export default function Sign() {
               </HStack> */}
               <FormControl id="u_name" isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input type="name" value={u_name} onChange={(e) => { setU_name(e.target.value) }}/>
+                <Input type="text" value={u_name} onChange={(e) => { setU_name(e.target.value) }}/>
                 </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>

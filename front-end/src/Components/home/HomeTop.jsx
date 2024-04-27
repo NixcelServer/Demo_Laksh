@@ -11,8 +11,12 @@ import {
   MenuItem,
   MenuList,
   Text,
-  VStack,
+  VStack
+ 
 } from "@chakra-ui/react";
+
+
+
 import React, { useState,useEffect } from "react";
 import {  useSelector } from 'react-redux';
 export default function HomeTop() {
@@ -20,6 +24,16 @@ export default function HomeTop() {
     const [name,setName] = useState('')
     const [mob,setMob] =  useState('')
     const [email,setEmail] =  useState('')
+    const [productName, setProductName] = useState("");
+        const [postDate, setPostDate] = useState(new Date().toLocaleDateString());
+    
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            // Here you can handle the submission of the form data
+            // For now, let's just log the product name
+            console.log("Product Name:", productName);
+          }
+
 
     useEffect(()=>{
 
@@ -33,6 +47,12 @@ export default function HomeTop() {
 
 
     },[isLogin])
+
+
+    
+        
+      
+        
 
 
   return (
@@ -87,6 +107,8 @@ export default function HomeTop() {
                         </VStack>
                     </Box>
                 </Flex>:<Flex  >
+
+                   
                 <Box display={{ base: 'none', md: 'flex' }}>
                 <Menu>
                     <MenuButton as={Button} bg='whiteAlpha.700' rightIcon={<ChevronDownIcon />}>
@@ -116,8 +138,18 @@ export default function HomeTop() {
                 </Box>
             </Flex>
         }
+
+        
        
       </Flex>
+
+
+
+
     </Box>
+
+
+
   );
 }
+

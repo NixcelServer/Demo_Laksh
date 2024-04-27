@@ -37,7 +37,8 @@ import React, { useState,useEffect } from 'react';
  import {authLogout} from '../../redux/auth/auth.action'
 
 
-
+ import { Link } from "react-router-dom";
+ import { FiLogIn, FiUser, FiLogOut } from "react-icons/fi"; // Import icons from react-icons library
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -98,7 +99,7 @@ export default function Navbar() {
                 {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
                 {/* <Image src='/images/2.png' w='60px' objectFit={'cover'} onClick={()=>{navigate('/')}}  /> */}
             </Box>
-                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} onClick={()=>{navigate('/')}}>B2B Portal</Heading>
+                <Heading color={'red.500'} size={{ md: 'md', lg: 'lg' }} onClick={()=>{navigate('/')}}>Laksh</Heading>
            
           </HStack>
           {
@@ -149,12 +150,14 @@ export default function Navbar() {
             </HStack>
 
             <Menu>
-              <MenuButton
+              {/* <MenuButton
                 as={Button}
                 rounded={'full'}
                 variant={'link'}
                 cursor={'pointer'}
-                minW={0}>
+                minW={0}
+                >
+                  
                 <Avatar
                   size={'sm'}
                   name={name} 
@@ -162,25 +165,41 @@ export default function Navbar() {
                   //   'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                   // }
                 />
-              </MenuButton>
-              <MenuList>
-                <MenuItem >
-                  {
-                    // !isLogin &&
-                     <Navlink to='/login' ><Button colorScheme='teal'>Login</Button></Navlink> 
-                  }
-                </MenuItem>
-                <MenuItem>
-                <Navlink to='/alogin' ><Button colorScheme='teal'>Admin</Button></Navlink>
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem>
-                    {
-                        // isLogin &&
-                      <Button colorScheme='red' onClick={handleLogout} >Logout</Button>
-                    } 
-                </MenuItem>
-              </MenuList>
+              </MenuButton> */}
+
+
+
+
+<Menu>
+  <MenuButton as="div" className="c-pointer position-relative">
+    <span className="activity active" />
+    <img src="/images/userlogo.png" height={40} width={40} alt="User" />
+  </MenuButton>
+  <MenuList>
+    <MenuItem>
+      <Link to="/login">
+        <Button leftIcon={<Icon as={FiLogIn} />} colorScheme="teal" variant="solid">
+          Login
+        </Button>
+      </Link>
+    </MenuItem>
+    <MenuItem>
+      <Link to="/alogin">
+        <Button leftIcon={<Icon as={FiUser} />} colorScheme="teal" variant="solid">
+          Admin
+        </Button>
+      </Link>
+    </MenuItem>
+    <MenuDivider />
+    <MenuItem>
+      <Button leftIcon={<Icon as={FiLogOut} />} colorScheme="red" variant="solid" onClick={handleLogout}>
+        Logout
+      </Button>
+    </MenuItem>
+  </MenuList>
+</Menu>
+
+
             </Menu>
           </Flex>
         </Flex>

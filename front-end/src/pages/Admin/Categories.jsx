@@ -297,6 +297,7 @@ const Categories = () => {
                     type="button"
                     className="btn btn-primary"
                     onClick={handleSaveChanges}
+                    style={{ marginTop: '0px' }}
                   >
                     Submit
                   </button>

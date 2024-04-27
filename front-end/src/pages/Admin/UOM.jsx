@@ -289,9 +289,14 @@ const UOM = () => {
                 >
                   Close
                 </button>
-                <button type='submit' class='btn btn-primary' onClick={handleSaveChanges}>
-                  Save changes
-                </button>
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSaveChanges}
+                    style={{ marginTop: '0px' }}
+                  >
+                    Submit
+                  </button> 
               </div>
             </form>
           </div>

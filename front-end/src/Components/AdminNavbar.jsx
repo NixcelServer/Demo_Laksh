@@ -130,19 +130,19 @@ const UpperBarContent = ({ onClose, ...rest }) => {
   const handleLogout = () => {
     // Clear user session data
     sessionStorage.removeItem('user');
+    dispatch(authLogout());
+   navigate('/');
   };
 
     
-    dispatch(authLogout());
-   navigate('/');
-   
-  }
-  return(
+    
+
+   return(
    
     <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,  }}>
     <div  className='nav-header'>
           <div className='brand-logo'>
-            <a href='index.html'style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <a href='/adminDashboard'style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
               <b style={{ marginTop: "0rem", textAlign: "center"}}className='logo-abbr'>
                 <img src='/images/2.png' style={{ height: '40px', marginRight: '8px' }} alt='' />{' '}
               </b>
@@ -397,7 +397,7 @@ const UpperBarContent = ({ onClose, ...rest }) => {
                   >
                     <span className='activity active' />
                     <img
-                      src='./theme/images/user/1.png'
+                      src='./theme/images/user.png'
                       height={40}
                       width={40}
                       alt
@@ -442,7 +442,10 @@ const UpperBarContent = ({ onClose, ...rest }) => {
         </div>
         </nav>
   )
-};
+   
+  }
+  
+
 
 const NavItem = ({ icon, children, ...rest }) => {
   return (
@@ -485,7 +488,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const navigate = useNavigate()
   return (
     <Flex
-    position={'fixed'}
+    // position={'fixed'}
     top="0rem"
     w={"100%"}
     zIndex={15}
